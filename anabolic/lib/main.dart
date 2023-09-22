@@ -67,22 +67,23 @@ class _MyHomePageState extends State<MyHomePage> {
     // 그래서 위젯의 인스턴스를 개별적으로 변경하는 대신 업데이트가 필요한 모든 부분을 재구성할 수 있다.
     return Scaffold(
       appBar: AppBar(
-        // 이 부분의 색상을 특정 색상으로 변경해보세자 (예를 들어 Colors.amber 등).
-        // 그런 다음 AppBar의 색상이 변경되는 것을 확인하고 다른 색상은 그대로 유지됩니다.
+        // 이 부분의 색상을 특정 색상으로 변경해보면 (예를 들어 Colors.amber)
+        // AppBar의 색상이 변경되는 것을 확인할 수 있고, 다른 색상은 그대로 유지된다.
         backgroundColor: Colors.blue,
-        // 여기서는 App.build 메서드에서 생성된 MyHomePage 객체에서 값을 가져와서 App Bar의 제목을 설정합니다.
+        // 여기서는 App.build 메서드에서 생성된 MyHomePage 객체에서 값을 가져와서 App Bar의 제목을 설정한다.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center는 레이아웃 위젯입니다. 하나의 자식을 가져와서 부모의 중앙에 배치합니다.
+        // Center는 레이아웃 위젯이다. 하나의 자식을 가져와서 부모의 중앙에 배치한다.
         child: Column(
-          // Column 또한 레이아웃 위젯으로, 자식들의 목록을 가져와 수직으로 정렬합니다. 기본적으로 자식들을 수평으로 맞추고 부모의 높이에 맞추려고 합니다.
+          // Column 또한 레이아웃 위젯으로, 자식들의 목록을 가져와 수직으로 정렬한다.
+          // 기본적으로 자식들을 수평으로 맞추고 부모의 높이에 맞춘다.
+          // Column은 자신의 크기를 조절하고 자식들을 어떻게 배치할지 제어하는 다양한 속성들이 있다.
+          // 여기서는 mainAxisAlignment을 사용하여 자식들을 수직으로 중앙에 배치한다.
+          // 여기서 주축은 수직축이며, Column은 수직으로 정렬된다.
+          // (수평축은 가로)
           //
-          // Column은 자신을 크기를 조절하고 자식들을 어떻게 배치할지 제어하는 다양한 속성이 있습니다.
-          // 여기서는 mainAxisAlignment을 사용하여 자식들을 수직으로 중앙에 배치합니다. 여기서 주축은 수직축이며 Column은 수직으로 정렬됩니다
-          // (수평축은 가로입니다).
-          //
-          // TRY THIS: "debug painting"을 활성화하여 (IDE에서 "Toggle Debug Paint" 액션을 선택하거나 콘솔에서 "p"를 누름) 각 위젯의 와이어프레임을 확인해보세요.
+          // TRY THIS: "debug painting"을 활성화하여 (IDE에서 "Toggle Debug Paint" 액션을 선택하거나 콘솔에서 "p"를 누름) 각 위젯의 와이어프레임을 할 수 있다
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -99,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // 이 후행 쉼표는 build 메서드에 대한 자동 형식 지원을 더 잘 보이게 만듭니다.
+      ), // 이 후행 쉼표는 build 메서드에 대한 자동 형식 지원을 더 잘 보이게 만든다.
     );
   }
 }
