@@ -8,16 +8,20 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: const Text('A'), // 앱 바에 출력할 테스트
-      ),
-      body: const Center(
-        child: Text('Hello, World!'), // 가운데에 출력할 테스트
-      ),
-    ));
+        home: const Scaffold(
+          body: Center(
+            child: Text(
+              'Hello, World!',
+              style: TextStyle(color: Colors.white),
+            ), // 가운데에 출력할 텍스트
+          ),
+        ),
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.black,
+        ));
   }
 }
