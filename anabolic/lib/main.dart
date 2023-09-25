@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           body: Center(
             child: Text(
               'Hello, World!',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 32),
             ), // 가운데에 출력할 텍스트
           ),
         ),
