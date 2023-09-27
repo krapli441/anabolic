@@ -18,6 +18,13 @@ class Diary extends StatelessWidget {
               lastDay: DateTime.utc(2030, 3, 14),
               focusedDay: DateTime.now(),
               locale: 'ko_KR',
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                weekendStyle: TextStyle(color: Colors.red),
+              ),
+              headerStyle: const HeaderStyle(
+                titleCentered: true,
+                formatButtonVisible: false,
+              ),
             )));
   }
 }
