@@ -1,6 +1,6 @@
 // diary.dart
-
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class Diary extends StatelessWidget {
   const Diary({Key? key}) : super(key: key);
@@ -11,8 +11,13 @@ class Diary extends StatelessWidget {
         appBar: AppBar(
           title: const Text('운동 기록'),
         ),
-        body: const Center(
-          child: Text('운동을 기록하는 페이지'),
-        ));
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TableCalendar(
+              firstDay: DateTime.utc(2020, 10, 16),
+              lastDay: DateTime.utc(2030, 3, 14),
+              focusedDay: DateTime.now(),
+              locale: 'ko_KR',
+            )));
   }
 }
