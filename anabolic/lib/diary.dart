@@ -18,13 +18,50 @@ class Diary extends StatelessWidget {
               lastDay: DateTime.utc(2030, 3, 14),
               focusedDay: DateTime.now(),
               locale: 'ko_KR',
-              daysOfWeekStyle: const DaysOfWeekStyle(
-                weekendStyle: TextStyle(color: Colors.red),
-              ),
               headerStyle: const HeaderStyle(
                 titleCentered: true,
                 formatButtonVisible: false,
               ),
+              calendarBuilders: CalendarBuilders(dowBuilder: (context, day) {
+                switch (day.weekday) {
+                  case 1:
+                    return const Center(
+                      child: Text('월'),
+                    );
+                  case 2:
+                    return const Center(
+                      child: Text('화'),
+                    );
+                  case 3:
+                    return const Center(
+                      child: Text('수'),
+                    );
+                  case 4:
+                    return const Center(
+                      child: Text('목'),
+                    );
+                  case 5:
+                    return const Center(
+                      child: Text('금'),
+                    );
+                  case 6:
+                    return const Center(
+                      child: Text(
+                        '토',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    );
+                  case 7:
+                    return const Center(
+                      child: Text(
+                        '일',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    );
+                  default:
+                    return const Center(child: Text('Error'));
+                }
+              }),
             )));
   }
 }
