@@ -61,6 +61,15 @@ class Diary extends StatelessWidget {
                   default:
                     return const Center(child: Text('Error'));
                 }
+              }, defaultBuilder: (context, date, _) {
+                if (date.weekday == 7) {
+                  return Center(
+                      child: Text(
+                    date.day.toString(),
+                    style: const TextStyle(color: Colors.red),
+                  ));
+                }
+                return Center(child: Text(date.day.toString()));
               }),
             )));
   }
