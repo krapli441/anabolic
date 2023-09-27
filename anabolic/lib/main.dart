@@ -11,7 +11,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // const 키워드를 제거했습니다.
   const MyApp({Key? key}) : super(key: key);
 
   @override
