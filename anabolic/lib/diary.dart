@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+// Todo
+// 1. 달력 날짜를 클릭하면 해당 날짜에 이벤트를 추가할 수 있어야 함.
+
 class Diary extends StatelessWidget {
   const Diary({Key? key}) : super(key: key);
 
