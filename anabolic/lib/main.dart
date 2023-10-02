@@ -24,18 +24,34 @@ class MyApp extends StatelessWidget {
         supportedLocales: const [
           Locale('ko', 'KR') // 한국어 설정
         ],
-        home: const Scaffold(
+        home: Scaffold(
           body: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'ANABOLIC',
-                style: TextStyle(color: Colors.black, fontSize: 32),
-              ),
-              NavigateButton(),
-            ],
-          )),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  height: 150,
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                      child: Icon(
+                    Icons.fitness_center_sharp,
+                    color: Colors.white,
+                    size: 100,
+                  )),
+                ),
+                const Text(
+                  'ANABOLIC',
+                  style: TextStyle(color: Colors.black, fontSize: 32),
+                ),
+                const ExerciseRecordButton(),
+                const RecordDiaryButton(),
+              ],
+            ),
+          ),
         ),
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
@@ -43,8 +59,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class NavigateButton extends StatelessWidget {
-  const NavigateButton({Key? key}) : super(key: key);
+class ExerciseRecordButton extends StatelessWidget {
+  const ExerciseRecordButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +69,24 @@ class NavigateButton extends StatelessWidget {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => const Diary()));
         },
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.blue)),
         child: const Text('운동 기록'));
+  }
+}
+
+class RecordDiaryButton extends StatelessWidget {
+  const RecordDiaryButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const Diary()));
+        },
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.blue)),
+        child: const Text('일지 확인'));
   }
 }
