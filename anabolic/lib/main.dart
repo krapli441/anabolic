@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
                     )),
                 const SizedBox(height: 30),
                 const ExerciseRecordButton(),
+                const SizedBox(height: 20),
                 const RecordDiaryButton(),
               ],
             ),
@@ -74,8 +75,19 @@ class ExerciseRecordButton extends StatelessWidget {
               context, MaterialPageRoute(builder: (context) => const Diary()));
         },
         style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(const Size(200, 50)),
             backgroundColor: MaterialStateProperty.all(Colors.blue)),
-        child: const Text('운동 기록'));
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.fitness_center),
+            SizedBox(
+              width: 10,
+            ),
+            Text('운동 기록'),
+          ],
+        ));
   }
 }
 
@@ -90,7 +102,19 @@ class RecordDiaryButton extends StatelessWidget {
               context, MaterialPageRoute(builder: (context) => const Diary()));
         },
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.blue)),
-        child: const Text('일지 확인'));
+          minimumSize: MaterialStateProperty.all(const Size(200, 50)),
+          backgroundColor: MaterialStateProperty.all(Colors.blue),
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.menu_book),
+            SizedBox(
+              width: 10,
+            ),
+            Text('일지 확인'),
+          ],
+        ));
   }
 }
