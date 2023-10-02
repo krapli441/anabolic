@@ -2,6 +2,7 @@
 // package
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // components
 import 'diary.dart';
@@ -43,10 +44,11 @@ class MyApp extends StatelessWidget {
                     size: 100,
                   )),
                 ),
-                const Text(
-                  'ANABOLIC',
-                  style: TextStyle(color: Colors.black, fontSize: 32),
-                ),
+                Text('ANABOLIC',
+                    style: GoogleFonts.stalinistOne(
+                      fontSize: 32,
+                      color: Colors.blue,
+                    )),
                 const ExerciseRecordButton(),
                 const RecordDiaryButton(),
               ],
