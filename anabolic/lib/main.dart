@@ -44,11 +44,13 @@ class MyApp extends StatelessWidget {
                     size: 100,
                   )),
                 ),
+                const SizedBox(height: 15),
                 Text('ANABOLIC',
                     style: GoogleFonts.stalinistOne(
                       fontSize: 32,
                       color: Colors.blue,
                     )),
+                const SizedBox(height: 30),
                 const ExerciseRecordButton(),
                 const RecordDiaryButton(),
               ],
