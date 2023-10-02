@@ -25,6 +25,7 @@ class Diary extends StatelessWidget {
                 titleCentered: true,
                 formatButtonVisible: false,
               ),
+              daysOfWeekHeight: 20,
               calendarBuilders: CalendarBuilders(dowBuilder: (context, day) {
                 switch (day.weekday) {
                   case 1:
