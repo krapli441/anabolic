@@ -93,45 +93,75 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
         padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+            mainAxisSize: MainAxisSize.max, // 가능한 최대로 확장
             children: [
+              const SizedBox(height: 50),
+              const Text(
+                '운동을 기록해주세요.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.blue),
+              ),
+              const SizedBox(height: 50),
               TextField(
                 controller: exerciseController,
-                decoration: const InputDecoration(labelText: '운동 이름'),
+                decoration: const InputDecoration(
+                    labelText: '운동',
+                    border: OutlineInputBorder(), // 테두리 스타일
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 10.0) // 텍스트 필드 안쪽 패딩
+                    ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               TextField(
                 controller: weightController,
-                decoration:
-                    const InputDecoration(labelText: '중량', suffixText: 'kg'),
+                decoration: const InputDecoration(
+                    labelText: '중량',
+                    suffixText: 'kg',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               TextField(
                 controller: repsController,
-                decoration:
-                    const InputDecoration(labelText: '횟수', suffixText: '회'),
+                decoration: const InputDecoration(
+                    labelText: '횟수',
+                    suffixText: '회',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               TextField(
                 controller: setsController,
-                decoration:
-                    const InputDecoration(labelText: '세트', suffixText: '세트'),
+                decoration: const InputDecoration(
+                    labelText: '세트',
+                    suffixText: '세트',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               TextField(
                 controller: notesController,
-                decoration: const InputDecoration(labelText: '특이사항'),
+                decoration: const InputDecoration(
+                    labelText: '특이사항',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
