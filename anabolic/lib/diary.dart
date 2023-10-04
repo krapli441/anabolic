@@ -120,11 +120,12 @@ class _DiaryState extends State<Diary> {
                   );
                 }),
               ),
+              const SizedBox(height: 30),
               Text(
                 '${_selectedDate.year}년 ${_selectedDate.month}월 ${_selectedDate.day}일',
-                style: const TextStyle(fontSize: 20, color: Colors.blue),
+                style: const TextStyle(fontSize: 24, color: Colors.blue),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               const ExerciseStartButton()
             ],
           ),
