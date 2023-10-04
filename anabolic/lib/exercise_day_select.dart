@@ -14,7 +14,7 @@ class ExerciseDaySelector extends StatefulWidget {
 }
 
 class _CalendarState extends State<ExerciseDaySelector> {
-  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now(); // 사용자가 달력에서 선택한 날짜를 나타냄
   DateTime _focusedDay = DateTime.now();
 
   @override
@@ -40,15 +40,14 @@ class _CalendarState extends State<ExerciseDaySelector> {
               ),
               const SizedBox(height: 20),
               TableCalendar(
-                // calendarStyle: const CalendarStyle(
-                //   todayDecoration:
-                //       BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
-                // ),
                 firstDay: DateTime.utc(2020, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
                 focusedDay: _focusedDay,
                 locale: 'ko_KR',
                 selectedDayPredicate: (date) => isSameDay(date, _selectedDate),
+                // 달력의 날짜를 클릭하면 onDaySelected 콜백이 호출되어
+                // _selectedDate와 _focusedDay를 업데이트한다.
+                // _selectedDate 값을 다른 페이지로 이동시켜야 함.
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     _selectedDate = selectedDay;
@@ -149,6 +148,7 @@ class ExerciseStartButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
               context,
+              // ExercizeList 클래스에 selectedDate를 전달함.
               MaterialPageRoute(
                   builder: (context) => ExerciseList(
                         selectedDate: selectedDate,
