@@ -9,10 +9,10 @@ class Diary extends StatefulWidget {
   const Diary({Key? key}) : super(key: key);
 
   @override
-  DiaryState createState() => DiaryState();
+  _DiaryState createState() => _DiaryState();
 }
 
-class DiaryState extends State<Diary> {
+class _DiaryState extends State<Diary> {
   DateTime _selectedDate = DateTime.now();
 
   @override
@@ -38,6 +38,10 @@ class DiaryState extends State<Diary> {
               ),
               const SizedBox(height: 20),
               TableCalendar(
+                calendarStyle: const CalendarStyle(
+                  todayDecoration:
+                      BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+                ),
                 firstDay: DateTime.utc(2020, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
                 focusedDay: DateTime.now(),
@@ -100,6 +104,13 @@ class DiaryState extends State<Diary> {
                     ));
                   }
                   return Center(child: Text(date.day.toString()));
+                }, selectedBuilder: (context, date, _) {
+                  return Container(
+                    margin: const EdgeInsets.all(4.0),
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        color: Colors.blue, shape: BoxShape.circle),
+                  );
                 }),
               ),
               Text(
