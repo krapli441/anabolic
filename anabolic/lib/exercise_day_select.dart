@@ -10,10 +10,10 @@ class ExerciseDaySelector extends StatefulWidget {
   const ExerciseDaySelector({Key? key}) : super(key: key);
 
   @override
-  _DiaryState createState() => _DiaryState();
+  _CalendarState createState() => _CalendarState();
 }
 
-class _DiaryState extends State<ExerciseDaySelector> {
+class _CalendarState extends State<ExerciseDaySelector> {
   DateTime _selectedDate = DateTime.now();
   DateTime _focusedDay = DateTime.now();
 
