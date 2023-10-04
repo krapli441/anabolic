@@ -15,66 +15,83 @@ class Diary extends StatelessWidget {
           title: const Text('운동 기록'),
         ),
         body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TableCalendar(
-              firstDay: DateTime.utc(2020, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              focusedDay: DateTime.now(),
-              locale: 'ko_KR',
-              headerStyle: const HeaderStyle(
-                titleCentered: true,
-                formatButtonVisible: false,
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center, // 텍스트를 중앙에 정렬
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "운동을 시작해볼까요?\n기록할 날짜를 선택하세요.",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.blue,
+                ),
+                textAlign: TextAlign.center,
               ),
-              daysOfWeekHeight: 20,
-              calendarBuilders: CalendarBuilders(dowBuilder: (context, day) {
-                switch (day.weekday) {
-                  case 1:
-                    return const Center(
-                      child: Text('월'),
-                    );
-                  case 2:
-                    return const Center(
-                      child: Text('화'),
-                    );
-                  case 3:
-                    return const Center(
-                      child: Text('수'),
-                    );
-                  case 4:
-                    return const Center(
-                      child: Text('목'),
-                    );
-                  case 5:
-                    return const Center(
-                      child: Text('금'),
-                    );
-                  case 6:
-                    return const Center(
-                      child: Text(
-                        '토',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    );
-                  case 7:
-                    return const Center(
-                      child: Text(
-                        '일',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    );
-                  default:
-                    return const Center(child: Text('Error'));
-                }
-              }, defaultBuilder: (context, date, _) {
-                if (date.weekday == 7) {
-                  return Center(
-                      child: Text(
-                    date.day.toString(),
-                    style: const TextStyle(color: Colors.red),
-                  ));
-                }
-                return Center(child: Text(date.day.toString()));
-              }),
-            )));
+              const SizedBox(height: 20),
+              TableCalendar(
+                firstDay: DateTime.utc(2020, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: DateTime.now(),
+                locale: 'ko_KR',
+                headerStyle: const HeaderStyle(
+                  titleCentered: true,
+                  formatButtonVisible: false,
+                ),
+                daysOfWeekHeight: 20,
+                calendarBuilders: CalendarBuilders(dowBuilder: (context, day) {
+                  switch (day.weekday) {
+                    case 1:
+                      return const Center(
+                        child: Text('월'),
+                      );
+                    case 2:
+                      return const Center(
+                        child: Text('화'),
+                      );
+                    case 3:
+                      return const Center(
+                        child: Text('수'),
+                      );
+                    case 4:
+                      return const Center(
+                        child: Text('목'),
+                      );
+                    case 5:
+                      return const Center(
+                        child: Text('금'),
+                      );
+                    case 6:
+                      return const Center(
+                        child: Text(
+                          '토',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      );
+                    case 7:
+                      return const Center(
+                        child: Text(
+                          '일',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      );
+                    default:
+                      return const Center(child: Text('Error'));
+                  }
+                }, defaultBuilder: (context, date, _) {
+                  if (date.weekday == 7) {
+                    return Center(
+                        child: Text(
+                      date.day.toString(),
+                      style: const TextStyle(color: Colors.red),
+                    ));
+                  }
+                  return Center(child: Text(date.day.toString()));
+                }),
+              )
+            ],
+          ),
+        ));
   }
 }
