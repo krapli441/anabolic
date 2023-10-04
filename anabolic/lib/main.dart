@@ -72,7 +72,9 @@ class ExerciseRecordButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Diary()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ExerciseDaySelector()));
         },
         style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(const Size(200, 50)),
@@ -99,7 +101,9 @@ class RecordDiaryButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Diary()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ExerciseDaySelector()));
         },
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(200, 50)),
