@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // components
-import 'diary.dart';
+import 'exercise_day_select.dart';
 
 void main() {
   runApp(const MyApp());
