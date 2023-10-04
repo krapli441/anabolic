@@ -29,27 +29,34 @@ class _ExerciseState extends State<ExerciseList> {
               dashPattern: const [8, 4],
               color: Colors.blue,
               child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    elevation: MaterialStateProperty.all(0), // 그림자 제거
-                    minimumSize: MaterialStateProperty.all(const Size(350, 70)),
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ExerciseRecord(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    '운동 추가하기',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                ),
-              ),
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0), // 그림자 제거
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(350, 70)),
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ExerciseRecord(),
+                        ),
+                      );
+                    },
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.add, color: Colors.blue), // plus 아이콘 추가
+                        SizedBox(width: 10), // 아이콘과 텍스트 사이의 간격
+                        Text(
+                          '운동 추가하기',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ],
+                    ),
+                  )),
             )
           ],
         ),
