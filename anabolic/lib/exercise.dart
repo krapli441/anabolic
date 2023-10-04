@@ -68,7 +68,7 @@ class _ExerciseState extends State<ExerciseList> {
             ),
             ...exerciseDataList.map((exerciseData) {
               return Text(
-                  '운동: ${exerciseData['exercise']}, 중량: ${exerciseData['weight']}, 횟수: ${exerciseData['reps']}, 세트: ${exerciseData['sets']}, 특이사항: ${exerciseData['notes']}');
+                  '운동: ${exerciseData['exercise']}\n 중량: ${exerciseData['weight']}\n 횟수: ${exerciseData['reps']}\n 세트: ${exerciseData['sets']}\n 특이사항: ${exerciseData['notes']}');
             }).toList(),
           ],
         ),
