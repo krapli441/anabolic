@@ -11,6 +11,8 @@ class ExerciseList extends StatefulWidget {
 }
 
 class _ExerciseState extends State<ExerciseList> {
+  List<Map<String, String>> exerciseDataList = [];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.85;
@@ -39,13 +41,17 @@ class _ExerciseState extends State<ExerciseList> {
                       minimumSize: MaterialStateProperty.all(Size(width, 70)),
                       backgroundColor: MaterialStateProperty.all(Colors.white),
                     ),
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      final result = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ExerciseRecord(),
                         ),
                       );
+                      if (result != null) {
+                        exerciseDataList.add(result); // 받아온 데이터를 리스트에 추가
+                        setState(() {}); // 화면을 갱신
+                      }
                     },
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
@@ -59,7 +65,11 @@ class _ExerciseState extends State<ExerciseList> {
                       ],
                     ),
                   )),
-            )
+            ),
+            ...exerciseDataList.map((exerciseData) {
+              return Text(
+                  '운동: ${exerciseData['exercise']}, 중량: ${exerciseData['weight']}, 횟수: ${exerciseData['reps']}, 세트: ${exerciseData['sets']}, 특이사항: ${exerciseData['notes']}');
+            }).toList(),
           ],
         ),
       ),
@@ -171,10 +181,14 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
                 onPressed: () {
-                  // 여기서 상태에 입력된 정보를 저장할 수 있습니다.
-                  // 예를 들어, List나 Map에 저장할 수 있습니다.
-                  // 이후에 ExerciseList 페이지로 돌아갑니다.
-                  Navigator.pop(context);
+                  var exerciseData = {
+                    "exercise": exerciseController.text,
+                    "weight": weightController.text,
+                    "reps": repsController.text,
+                    "sets": setsController.text,
+                    "notes": notesController.text
+                  };
+                  Navigator.pop(context, exerciseData);
                 },
                 child: const Text('추가하기'),
               ),
