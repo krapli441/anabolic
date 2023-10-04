@@ -14,6 +14,7 @@ class Diary extends StatefulWidget {
 
 class _DiaryState extends State<Diary> {
   DateTime _selectedDate = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +39,19 @@ class _DiaryState extends State<Diary> {
               ),
               const SizedBox(height: 20),
               TableCalendar(
-                calendarStyle: const CalendarStyle(
-                  todayDecoration:
-                      BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
-                ),
+                // calendarStyle: const CalendarStyle(
+                //   todayDecoration:
+                //       BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+                // ),
                 firstDay: DateTime.utc(2020, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
-                focusedDay: DateTime.now(),
+                focusedDay: _focusedDay,
                 locale: 'ko_KR',
+                selectedDayPredicate: (date) => isSameDay(date, _selectedDate),
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     _selectedDate = selectedDay;
+                    _focusedDay = focusedDay;
                   });
                 },
                 headerStyle: const HeaderStyle(
@@ -110,6 +113,10 @@ class _DiaryState extends State<Diary> {
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
                         color: Colors.blue, shape: BoxShape.circle),
+                    child: Text(
+                      date.day.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   );
                 }),
               ),
