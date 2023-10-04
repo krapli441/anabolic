@@ -130,7 +130,7 @@ class _DiaryState extends State<Diary> {
                     fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 30),
-              const ExerciseStartButton()
+              ExerciseStartButton(selectedDate: _selectedDate)
             ],
           ),
         ));
@@ -138,14 +138,21 @@ class _DiaryState extends State<Diary> {
 }
 
 class ExerciseStartButton extends StatelessWidget {
-  const ExerciseStartButton({Key? key}) : super(key: key);
+  final DateTime selectedDate; // 여기에 selectedDate 변수 추가
+
+  const ExerciseStartButton({Key? key, required this.selectedDate})
+      : super(key: key); // constructor에서 selectedDate를 받는다.
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ExerciseList()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ExerciseList(
+                        selectedDate: selectedDate,
+                      )));
         },
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(200, 50)),
