@@ -1,4 +1,5 @@
 // diary.dart
+import 'package:anabolic/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -143,8 +144,8 @@ class ExerciseStartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Diary()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ExerciseList()));
         },
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(200, 50)),
