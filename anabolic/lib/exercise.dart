@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/services.dart';
 
 class ExerciseList extends StatefulWidget {
   final DateTime selectedDate;
@@ -12,6 +13,8 @@ class ExerciseList extends StatefulWidget {
 class _ExerciseState extends State<ExerciseList> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width * 0.85;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -33,8 +36,7 @@ class _ExerciseState extends State<ExerciseList> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0), // 그림자 제거
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(350, 70)),
+                      minimumSize: MaterialStateProperty.all(Size(width, 70)),
                       backgroundColor: MaterialStateProperty.all(Colors.white),
                     ),
                     onPressed: () {
@@ -65,17 +67,90 @@ class _ExerciseState extends State<ExerciseList> {
   }
 }
 
-class ExerciseRecord extends StatelessWidget {
+class ExerciseRecord extends StatefulWidget {
   const ExerciseRecord({Key? key}) : super(key: key);
 
   @override
+  _ExerciseRecordState createState() => _ExerciseRecordState();
+}
+
+class _ExerciseRecordState extends State<ExerciseRecord> {
+  TextEditingController exerciseController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
+  TextEditingController repsController = TextEditingController();
+  TextEditingController setsController = TextEditingController();
+  TextEditingController notesController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width * 1;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('운동 기록'),
       ),
-      body: const Center(
-        child: Text('여기서 운동을 기록할 수 있습니다.'),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: exerciseController,
+                decoration: const InputDecoration(labelText: '운동 이름'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: weightController,
+                decoration:
+                    const InputDecoration(labelText: '중량', suffixText: 'kg'),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: repsController,
+                decoration:
+                    const InputDecoration(labelText: '횟수', suffixText: '회'),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: setsController,
+                decoration:
+                    const InputDecoration(labelText: '세트', suffixText: '세트'),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: notesController,
+                decoration: const InputDecoration(labelText: '특이사항'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(0), // 그림자 제거
+                  minimumSize: MaterialStateProperty.all(Size(width, 70)),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                onPressed: () {
+                  // 여기서 상태에 입력된 정보를 저장할 수 있습니다.
+                  // 예를 들어, List나 Map에 저장할 수 있습니다.
+                  // 이후에 ExerciseList 페이지로 돌아갑니다.
+                  Navigator.pop(context);
+                },
+                child: const Text('추가하기'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
