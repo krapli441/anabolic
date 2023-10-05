@@ -20,13 +20,12 @@ class _ExerciseState extends State<ExerciseList> {
   @override
   void initState() {
     super.initState();
-    // 날짜를 문자열로 변환합니다.
+    // 날짜를 문자열로 변환.
     String formattedDate =
         "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
-    // 데이터를 불러옵니다.
+    // 데이터를 불러온다.
     fetchExerciseByDate(formattedDate).then((fetchedData) {
       setState(() {
-        // 여기를 수정합니다.
         exerciseDataList = fetchedData.map((queryRow) {
           return {
             'exercise': queryRow['name'].toString(),
@@ -34,7 +33,6 @@ class _ExerciseState extends State<ExerciseList> {
             'reps': queryRow['reps'].toString(),
             'sets': queryRow['sets'].toString(),
             'notes': queryRow['notes'].toString(),
-            // 추가적으로 필요한 필드들
           };
         }).toList();
       });
@@ -139,10 +137,30 @@ class _ExerciseState extends State<ExerciseList> {
                                       child: const Text('변경'),
                                     ),
                                     TextButton(
-                                      onPressed: () {
-                                        // 삭제 로직
-                                        exerciseDataList.remove(exerciseData);
-                                        setState(() {});
+                                      onPressed: () async {
+                                        await deleteExercise(
+                                            exerciseData); // 데이터베이스에서 해당 운동을 삭제
+                                        setState(
+                                          () {
+                                            exerciseDataList.removeWhere(
+                                                (exercise) =>
+                                                    exercise['name'] ==
+                                                        exerciseData['name'] &&
+                                                    exercise['weight'] ==
+                                                        exerciseData[
+                                                            'weight'] &&
+                                                    exercise['reps'] ==
+                                                        exerciseData['reps'] &&
+                                                    exercise['sets'] ==
+                                                        exerciseData['sets'] &&
+                                                    exercise['notes'] ==
+                                                        exerciseData['notes'] &&
+                                                    exercise['date'] ==
+                                                        exerciseData[
+                                                            'date']); // UI에서 해당 운동을 삭제
+                                          },
+                                        );
+                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: const Text("삭제"),

@@ -50,3 +50,26 @@ Future<List<Map<String, dynamic>>> fetchExerciseByDate(String date) async {
   );
   return maps;
 }
+
+Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
+  final db = await initializeDB(); // 데이터베이스 초기화
+
+  if (exerciseData.values.any((value) => value == null)) {
+    print('One or more fields are null');
+    return;
+  }
+
+  await db.delete(
+    'Exercise',
+    where:
+        'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
+    whereArgs: [
+      exerciseData['name'],
+      exerciseData['weight'],
+      exerciseData['reps'],
+      exerciseData['sets'],
+      exerciseData['notes'],
+      exerciseData['date']
+    ],
+  );
+}
