@@ -27,7 +27,7 @@ Future<void> insertExercise(Map<String, String> exerciseData) async {
     "reps": int.parse(exerciseData["reps"] ?? "0"),
     "sets": int.parse(exerciseData["sets"] ?? "0"),
     "notes": exerciseData["notes"],
-    "date": DateTime.now().toIso8601String(), // 현재 시간을 ISO8601 형식으로 저장
+    "date": exerciseData["date"],
   };
 
   // 데이터 삽입

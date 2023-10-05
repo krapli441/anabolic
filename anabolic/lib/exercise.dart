@@ -23,12 +23,20 @@ class _ExerciseState extends State<ExerciseList> {
     // 날짜를 문자열로 변환합니다.
     String formattedDate =
         "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
-    print(formattedDate);
     // 데이터를 불러옵니다.
     fetchExerciseByDate(formattedDate).then((fetchedData) {
       setState(() {
-        exerciseDataList = List<Map<String, String>>.from(fetchedData);
-        print(fetchedData);
+        // 여기를 수정합니다.
+        exerciseDataList = fetchedData.map((queryRow) {
+          return {
+            'exercise': queryRow['name'].toString(),
+            'weight': queryRow['weight'].toString(),
+            'reps': queryRow['reps'].toString(),
+            'sets': queryRow['sets'].toString(),
+            'notes': queryRow['notes'].toString(),
+            // 추가적으로 필요한 필드들
+          };
+        }).toList();
       });
     });
   }
