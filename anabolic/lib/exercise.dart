@@ -202,15 +202,39 @@ class _ExerciseState extends State<ExerciseList> {
         ),
       )),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(30.0),
         child: ElevatedButton(
-          onPressed: () {
-            // '운동 종료' 버튼이 눌렸을 때의 동작
-          },
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size(200, 50), // 버튼의 너비와 높이 설정
-            // 다른 스타일 설정도 가능
+          style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0), // 그림자 제거
+            minimumSize: MaterialStateProperty.all(Size(width, 50)),
+            backgroundColor: MaterialStateProperty.all(Colors.blue),
           ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('운동 종료'),
+                  content: const Text('운동을 종료하고 기록하시겠어요?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context); // 다이얼로그 닫기
+                        // 운동 기록 저장 로직을 여기에 추가할 수 있습니다.
+                      },
+                      child: const Text('네'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context); // 다이얼로그 닫기
+                      },
+                      child: const Text('아니요'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
           child: const Text('운동 종료'),
         ),
       ),
