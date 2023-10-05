@@ -71,7 +71,9 @@ class _ExerciseState extends State<ExerciseList> {
                           final result = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ExerciseRecord(),
+                              builder: (context) => ExerciseRecord(
+                                selectedDate: widget.selectedDate, // 날짜를 전달합니다.
+                              ),
                             ),
                           );
                           if (result != null) {
@@ -113,7 +115,10 @@ class _ExerciseState extends State<ExerciseList> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const ExerciseRecord(),
+                                                ExerciseRecord(
+                                              selectedDate: widget
+                                                  .selectedDate, // 날짜를 전달합니다.
+                                            ),
                                           ),
                                         );
                                         if (result != null) {
@@ -257,7 +262,9 @@ class _ExerciseState extends State<ExerciseList> {
 
 class ExerciseRecord extends StatefulWidget {
   final Map<String, String>? initialData;
-  const ExerciseRecord({Key? key, this.initialData}) : super(key: key);
+  final DateTime selectedDate;
+  const ExerciseRecord({Key? key, this.initialData, required this.selectedDate})
+      : super(key: key);
 
   @override
   _ExerciseRecordState createState() => _ExerciseRecordState();
@@ -270,6 +277,7 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
   TextEditingController repsController = TextEditingController();
   TextEditingController setsController = TextEditingController();
   TextEditingController notesController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
 
   @override
   void initState() {
@@ -284,6 +292,8 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
         TextEditingController(text: widget.initialData?['sets'] ?? '');
     notesController =
         TextEditingController(text: widget.initialData?['notes'] ?? '');
+    dateController =
+        TextEditingController(text: widget.initialData?['date'] ?? '');
   }
 
   @override
@@ -376,12 +386,15 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
                 onPressed: () async {
+                  String formattedDate =
+                      "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
                   var exerciseData = {
                     "exercise": exerciseController.text,
                     "weight": weightController.text,
                     "reps": repsController.text,
                     "sets": setsController.text,
-                    "notes": notesController.text
+                    "notes": notesController.text,
+                    "date": formattedDate
                   };
                   // 데이터베이스에 운동 기록 추가
                   await insertExercise(exerciseData);
