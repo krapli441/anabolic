@@ -18,65 +18,64 @@ class _ExerciseState extends State<ExerciseList> {
     double width = MediaQuery.of(context).size.width * 0.85;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-              '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20), // 간격 조정
-                  DottedBorder(
-                    borderType: BorderType.RRect,
-                    radius: const Radius.circular(5),
-                    padding: const EdgeInsets.all(6),
-                    dashPattern: const [6, 5],
-                    color: Colors.blue,
-                    child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all(0), // 그림자 제거
-                            minimumSize:
-                                MaterialStateProperty.all(Size(width, 70)),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                          ),
-                          onPressed: () async {
-                            final result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ExerciseRecord(),
-                              ),
-                            );
-                            if (result != null) {
-                              exerciseDataList.add(result); // 받아온 데이터를 리스트에 추가
-                              setState(() {}); // 화면을 갱신
-                            }
-                          },
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.add,
-                                  color: Colors.blue), // plus 아이콘 추가
-                              SizedBox(width: 10), // 아이콘과 텍스트 사이의 간격
-                              Text(
-                                '운동 추가하기',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ),
-                  const SizedBox(height: 15),
-
-                  Column(
+      appBar: AppBar(
+        title: Text(
+            '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일'),
+      ),
+      body: SingleChildScrollView(
+          child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20), // 간격 조정
+                DottedBorder(
+                  borderType: BorderType.RRect,
+                  radius: const Radius.circular(5),
+                  padding: const EdgeInsets.all(6),
+                  dashPattern: const [6, 5],
+                  color: Colors.blue,
+                  child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0), // 그림자 제거
+                          minimumSize:
+                              MaterialStateProperty.all(Size(width, 70)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                        ),
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ExerciseRecord(),
+                            ),
+                          );
+                          if (result != null) {
+                            exerciseDataList.add(result); // 받아온 데이터를 리스트에 추가
+                            setState(() {}); // 화면을 갱신
+                          }
+                        },
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.add, color: Colors.blue), // plus 아이콘 추가
+                            SizedBox(width: 10), // 아이콘과 텍스트 사이의 간격
+                            Text(
+                              '운동 추가하기',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
+                const SizedBox(height: 15),
+                SingleChildScrollView(
+                  child: Column(
                     children: exerciseDataList.map((exerciseData) {
                       return SizedBox(
                           width: width + 10,
@@ -96,10 +95,11 @@ class _ExerciseState extends State<ExerciseList> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '운동: ${exerciseData['exercise']}',
+                                          '${exerciseData['exercise']}',
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
+                                            fontSize: 20,
                                           ),
                                         ),
                                         Text(
@@ -136,11 +136,26 @@ class _ExerciseState extends State<ExerciseList> {
                               )));
                     }).toList(),
                   ),
-                ],
-              ),
-            ],
+                )
+              ],
+            ),
+          ],
+        ),
+      )),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            // '운동 종료' 버튼이 눌렸을 때의 동작
+          },
+          style: ElevatedButton.styleFrom(
+            fixedSize: const Size(200, 50), // 버튼의 너비와 높이 설정
+            // 다른 스타일 설정도 가능
           ),
-        ));
+          child: const Text('운동 종료'),
+        ),
+      ),
+    );
   }
 }
 
