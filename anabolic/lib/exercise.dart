@@ -76,74 +76,79 @@ class _ExerciseState extends State<ExerciseList> {
                 const SizedBox(height: 15),
                 SingleChildScrollView(
                   child: Column(
-                    children: exerciseDataList.map((exerciseData) {
-                      return SizedBox(
-                          width: width + 10,
-                          child: Card(
-                              color: Colors.blue,
-                              margin:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    //! 좌측 부분
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${exerciseData['exercise']}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.library_books,
+                    children: exerciseDataList.map<Widget>((exerciseData) {
+                      return GestureDetector(
+                        onTap: () async {
+                          
+                        },
+                        child: SizedBox(
+                            width: width + 10,
+                            child: Card(
+                                color: Colors.blue,
+                                margin:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      //! 좌측 부분
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${exerciseData['exercise']}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
                                               color: Colors.white,
-                                              size: 20,
+                                              fontSize: 20,
                                             ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              '${exerciseData['notes']}',
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    //! 우측 부분
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '${exerciseData['weight']}kg',
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
-                                        Text(
-                                          '${exerciseData['sets']}세트',
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
-                                        Text(
-                                          '${exerciseData['reps']}회',
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )));
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.library_books,
+                                                color: Colors.white,
+                                                size: 20,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                '${exerciseData['notes']}',
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      //! 우측 부분
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            '${exerciseData['weight']}kg',
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                          Text(
+                                            '${exerciseData['sets']}세트',
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                          Text(
+                                            '${exerciseData['reps']}회',
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ))),
+                      );
                     }).toList(),
                   ),
                 )
@@ -291,3 +296,75 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
     );
   }
 }
+
+
+
+                    // children: exerciseDataList.map((exerciseData) {
+                    //   return SizedBox(
+                    //       width: width + 10,
+                    //       child: Card(
+                    //           color: Colors.blue,
+                    //           margin:
+                    //               const EdgeInsets.only(top: 10, bottom: 10),
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.all(12.0),
+                    //             child: Row(
+                    //               mainAxisAlignment:
+                    //                   MainAxisAlignment.spaceBetween,
+                    //               children: [
+                    //                 //! 좌측 부분
+                    //                 Column(
+                    //                   crossAxisAlignment:
+                    //                       CrossAxisAlignment.start,
+                    //                   children: [
+                    //                     Text(
+                    //                       '${exerciseData['exercise']}',
+                    //                       style: const TextStyle(
+                    //                         fontWeight: FontWeight.bold,
+                    //                         color: Colors.white,
+                    //                         fontSize: 20,
+                    //                       ),
+                    //                     ),
+                    //                     Row(
+                    //                       children: [
+                    //                         const Icon(
+                    //                           Icons.library_books,
+                    //                           color: Colors.white,
+                    //                           size: 20,
+                    //                         ),
+                    //                         const SizedBox(width: 5),
+                    //                         Text(
+                    //                           '${exerciseData['notes']}',
+                    //                           style: const TextStyle(
+                    //                               color: Colors.white),
+                    //                         ),
+                    //                       ],
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //                 //! 우측 부분
+                    //                 Column(
+                    //                   crossAxisAlignment:
+                    //                       CrossAxisAlignment.end,
+                    //                   children: [
+                    //                     Text(
+                    //                       '${exerciseData['weight']}kg',
+                    //                       style: const TextStyle(
+                    //                           color: Colors.white),
+                    //                     ),
+                    //                     Text(
+                    //                       '${exerciseData['sets']}세트',
+                    //                       style: const TextStyle(
+                    //                           color: Colors.white),
+                    //                     ),
+                    //                     Text(
+                    //                       '${exerciseData['reps']}회',
+                    //                       style: const TextStyle(
+                    //                           color: Colors.white),
+                    //                     ),
+                    //                   ],
+                    //                 )
+                    //               ],
+                    //             ),
+                    //           )));
+                    // }).toList(),
