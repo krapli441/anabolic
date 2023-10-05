@@ -79,6 +79,7 @@ class _ExerciseState extends State<ExerciseList> {
                     children: exerciseDataList.map<Widget>((exerciseData) {
                       return GestureDetector(
                         onLongPress: () async {
+                          HapticFeedback.lightImpact();
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
