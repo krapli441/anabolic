@@ -35,7 +35,7 @@ class _ExerciseState extends State<ExerciseList> {
                   borderType: BorderType.RRect,
                   radius: const Radius.circular(5),
                   padding: const EdgeInsets.all(6),
-                  dashPattern: const [8, 4],
+                  dashPattern: const [6, 5],
                   color: Colors.blue,
                   child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -74,22 +74,36 @@ class _ExerciseState extends State<ExerciseList> {
                 ),
                 Column(
                   children: exerciseDataList.map((exerciseData) {
-                    return Container(
-                      width: width,
+                    return SizedBox(
+                      width: width + 10,
                       child: Card(
-                        margin: const EdgeInsets.all(10),
+                        color: Colors.blue,
+                        margin: const EdgeInsets.only(top: 10, bottom: 10),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('운동: ${exerciseData['exercise']}',
+                              Text('${exerciseData['exercise']}',
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              Text('중량: ${exerciseData['weight']}kg'),
-                              Text('횟수: ${exerciseData['reps']}회'),
-                              Text('세트: ${exerciseData['sets']}세트'),
-                              Text('특이사항: ${exerciseData['notes']}'),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white)),
+                              Text(
+                                '중량: ${exerciseData['weight']}kg',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                '횟수: ${exerciseData['reps']}회',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                '세트: ${exerciseData['sets']}세트',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                '특이사항: ${exerciseData['notes']}',
+                                style: const TextStyle(color: Colors.white),
+                              ),
                             ],
                           ),
                         ),
