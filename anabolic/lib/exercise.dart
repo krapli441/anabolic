@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/services.dart';
 
+// components
+
+import 'database.dart';
+
 class ExerciseList extends StatefulWidget {
   final DateTime selectedDate;
   const ExerciseList({Key? key, required this.selectedDate}) : super(key: key);
@@ -11,7 +15,23 @@ class ExerciseList extends StatefulWidget {
 }
 
 class _ExerciseState extends State<ExerciseList> {
-  List<Map<String, String>> exerciseDataList = [];
+  List<Map<String, dynamic>> exerciseDataList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // 날짜를 문자열로 변환합니다.
+    String formattedDate =
+        "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
+    print(formattedDate);
+    // 데이터를 불러옵니다.
+    fetchExerciseByDate(formattedDate).then((fetchedData) {
+      setState(() {
+        exerciseDataList = List<Map<String, String>>.from(fetchedData);
+        print(fetchedData);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,26 +109,19 @@ class _ExerciseState extends State<ExerciseList> {
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
-                                        final updatedData =
-                                            await Navigator.push(
+                                        final result = await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ExerciseRecord(
-                                              initialData: exerciseData,
-                                            ),
+                                                const ExerciseRecord(),
                                           ),
                                         );
-
-                                        if (updatedData != null) {
-                                          int indexToUpdate = exerciseDataList
-                                              .indexOf(exerciseData);
-                                          exerciseDataList[indexToUpdate] =
-                                              updatedData;
-                                          setState(() {}); // 화면 갱신
+                                        if (result != null) {
+                                          exerciseDataList.add(result);
+                                          insertExercise(
+                                              result); // 데이터베이스에 데이터를 저장합니다.
+                                          setState(() {});
                                         }
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.pop(context); // 팝업 닫기
                                       },
                                       child: const Text('변경'),
                                     ),
@@ -362,7 +375,7 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
                   minimumSize: MaterialStateProperty.all(Size(width, 70)),
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   var exerciseData = {
                     "exercise": exerciseController.text,
                     "weight": weightController.text,
@@ -370,6 +383,9 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
                     "sets": setsController.text,
                     "notes": notesController.text
                   };
+                  // 데이터베이스에 운동 기록 추가
+                  await insertExercise(exerciseData);
+                  // ignore: use_build_context_synchronously
                   Navigator.pop(context, exerciseData);
                 },
                 child: const Text('추가하기'),

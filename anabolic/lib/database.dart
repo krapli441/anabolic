@@ -15,3 +15,38 @@ Future<Database> initializeDB() async {
     },
   );
 }
+
+Future<void> insertExercise(Map<String, String> exerciseData) async {
+  // 데이터베이스 초기화
+  final db = await initializeDB();
+
+  // 삽입할 데이터 준비
+  Map<String, dynamic> dataToInsert = {
+    "name": exerciseData["exercise"],
+    "weight": int.parse(exerciseData["weight"] ?? "0"),
+    "reps": int.parse(exerciseData["reps"] ?? "0"),
+    "sets": int.parse(exerciseData["sets"] ?? "0"),
+    "notes": exerciseData["notes"],
+    "date": DateTime.now().toIso8601String(), // 현재 시간을 ISO8601 형식으로 저장
+  };
+
+  // 데이터 삽입
+  await db.insert("Exercise", dataToInsert);
+
+  // 삽입 성공 여부 확인
+  if (dataToInsert != 0) {
+    print("운동 기록이 데이터베이스에 성공적으로 삽입되었습니다. ID: $dataToInsert");
+  } else {
+    print("운동 기록 삽입에 실패했습니다.");
+  }
+}
+
+Future<List<Map<String, dynamic>>> fetchExerciseByDate(String date) async {
+  final db = await initializeDB(); // 데이터베이스 초기화
+  final List<Map<String, dynamic>> maps = await db.query(
+    'Exercise',
+    where: 'date = ?',
+    whereArgs: [date],
+  );
+  return maps;
+}
