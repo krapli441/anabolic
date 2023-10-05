@@ -33,6 +33,8 @@ dependencies:
   table_calendar: ^3.0.9
   google_fonts: ^6.1.0
   dotted_border: ^2.1.0
+  sqflite: ^2.3.0
+  path_provider: ^2.1.1
 
   flutter_localizations:
     sdk: flutter
