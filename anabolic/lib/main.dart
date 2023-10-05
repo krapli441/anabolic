@@ -6,9 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 // components
 import 'exercise_day_select.dart';
+import 'database.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MyApp());
+  await initializeDB();
 }
 
 class MyApp extends StatelessWidget {
