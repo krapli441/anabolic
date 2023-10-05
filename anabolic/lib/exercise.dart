@@ -23,56 +23,85 @@ class _ExerciseState extends State<ExerciseList> {
             '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일'),
       ),
       body: Center(
+          child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 20), // 간격 조정
-            DottedBorder(
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(5),
-              padding: const EdgeInsets.all(6),
-              dashPattern: const [8, 4],
-              color: Colors.blue,
-              child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(0), // 그림자 제거
-                      minimumSize: MaterialStateProperty.all(Size(width, 70)),
-                      backgroundColor: MaterialStateProperty.all(Colors.white),
-                    ),
-                    onPressed: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ExerciseRecord(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20), // 간격 조정
+                DottedBorder(
+                  borderType: BorderType.RRect,
+                  radius: const Radius.circular(5),
+                  padding: const EdgeInsets.all(6),
+                  dashPattern: const [8, 4],
+                  color: Colors.blue,
+                  child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0), // 그림자 제거
+                          minimumSize:
+                              MaterialStateProperty.all(Size(width, 70)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
                         ),
-                      );
-                      if (result != null) {
-                        exerciseDataList.add(result); // 받아온 데이터를 리스트에 추가
-                        setState(() {}); // 화면을 갱신
-                      }
-                    },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.add, color: Colors.blue), // plus 아이콘 추가
-                        SizedBox(width: 10), // 아이콘과 텍스트 사이의 간격
-                        Text(
-                          '운동 추가하기',
-                          style: TextStyle(color: Colors.blue),
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ExerciseRecord(),
+                            ),
+                          );
+                          if (result != null) {
+                            exerciseDataList.add(result); // 받아온 데이터를 리스트에 추가
+                            setState(() {}); // 화면을 갱신
+                          }
+                        },
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.add, color: Colors.blue), // plus 아이콘 추가
+                            SizedBox(width: 10), // 아이콘과 텍스트 사이의 간격
+                            Text(
+                              '운동 추가하기',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )),
+                      )),
+                ),
+                Column(
+                  children: exerciseDataList.map((exerciseData) {
+                    return Container(
+                      width: width,
+                      child: Card(
+                        margin: const EdgeInsets.all(10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('운동: ${exerciseData['exercise']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              Text('중량: ${exerciseData['weight']}kg'),
+                              Text('횟수: ${exerciseData['reps']}회'),
+                              Text('세트: ${exerciseData['sets']}세트'),
+                              Text('특이사항: ${exerciseData['notes']}'),
+                            ],
+                          ),
+                        ),
+                      ), // 위에서 정의한 width 값을 사용
+                    );
+                  }).toList(),
+                ),
+              ],
             ),
-            ...exerciseDataList.map((exerciseData) {
-              return Text(
-                  '운동: ${exerciseData['exercise']}\n 중량: ${exerciseData['weight']}\n 횟수: ${exerciseData['reps']}\n 세트: ${exerciseData['sets']}\n 특이사항: ${exerciseData['notes']}');
-            }).toList(),
           ],
         ),
-      ),
+      )),
     );
   }
 }
