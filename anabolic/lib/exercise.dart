@@ -60,6 +60,7 @@ class _ExerciseState extends State<ExerciseList> {
                           }
                         },
                         child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.add, color: Colors.blue), // plus 아이콘 추가
@@ -72,43 +73,63 @@ class _ExerciseState extends State<ExerciseList> {
                         ),
                       )),
                 ),
+                const SizedBox(height: 15),
                 Column(
                   children: exerciseDataList.map((exerciseData) {
                     return SizedBox(
-                      width: width + 10,
-                      child: Card(
-                        color: Colors.blue,
-                        margin: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${exerciseData['exercise']}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                              Text(
-                                '중량: ${exerciseData['weight']}kg',
-                                style: const TextStyle(color: Colors.white),
+                        width: width + 10,
+                        child: Card(
+                            color: Colors.blue,
+                            margin: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //! 좌측 부분
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '운동: ${exerciseData['exercise']}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        '특이사항: ${exerciseData['notes']}',
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  //! 우측 부분
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '중량: ${exerciseData['weight']}kg',
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        '세트: ${exerciseData['sets']}세트',
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        '횟수: ${exerciseData['reps']}회',
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              Text(
-                                '횟수: ${exerciseData['reps']}회',
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                '세트: ${exerciseData['sets']}세트',
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                '특이사항: ${exerciseData['notes']}',
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ), // 위에서 정의한 width 값을 사용
-                    );
+                            )));
                   }).toList(),
                 ),
               ],
