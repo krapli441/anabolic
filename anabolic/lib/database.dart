@@ -52,24 +52,29 @@ Future<List<Map<String, dynamic>>> fetchExerciseByDate(String date) async {
 }
 
 Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
-  final db = await initializeDB(); // 데이터베이스 초기화
+  try {
+    final db = await initializeDB(); // 데이터베이스 초기화
 
-  if (exerciseData.values.any((value) => value == null)) {
-    print('One or more fields are null');
-    return;
+    print(
+        "In deleteExercise, whereArgs: [${exerciseData['exercise']},${exerciseData['weight']},${exerciseData['reps']},${exerciseData['sets']},${exerciseData['notes']}]");
+
+    if (exerciseData.values.any((value) => value == null)) {
+      print('One or more fields are null');
+      return;
+    }
+
+    await db.delete(
+      'Exercise',
+      where: 'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ?',
+      whereArgs: [
+        exerciseData['exercise'],
+        exerciseData['weight'],
+        exerciseData['reps'],
+        exerciseData['sets'],
+        exerciseData['notes'],
+      ],
+    );
+  } catch (e) {
+    print("Error while deleting: $e");
   }
-
-  await db.delete(
-    'Exercise',
-    where:
-        'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
-    whereArgs: [
-      exerciseData['name'],
-      exerciseData['weight'],
-      exerciseData['reps'],
-      exerciseData['sets'],
-      exerciseData['notes'],
-      exerciseData['date']
-    ],
-  );
 }
