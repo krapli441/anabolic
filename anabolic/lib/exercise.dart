@@ -78,8 +78,51 @@ class _ExerciseState extends State<ExerciseList> {
                   child: Column(
                     children: exerciseDataList.map<Widget>((exerciseData) {
                       return GestureDetector(
-                        onTap: () async {
-                          
+                        onLongPress: () async {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('기록 수정'),
+                                  content: const Text('기록을 변경하거나 삭제할 수 있습니다.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        final updatedData =
+                                            await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ExerciseRecord(
+                                              initialData: exerciseData,
+                                            ),
+                                          ),
+                                        );
+
+                                        if (updatedData != null) {
+                                          int indexToUpdate = exerciseDataList
+                                              .indexOf(exerciseData);
+                                          exerciseDataList[indexToUpdate] =
+                                              updatedData;
+                                          setState(() {}); // 화면 갱신
+                                        }
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context); // 팝업 닫기
+                                      },
+                                      child: const Text('변경'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        // 삭제 로직
+                                        exerciseDataList.remove(exerciseData);
+                                        setState(() {});
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text("삭제"),
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                         child: SizedBox(
                             width: width + 10,
@@ -175,18 +218,35 @@ class _ExerciseState extends State<ExerciseList> {
 }
 
 class ExerciseRecord extends StatefulWidget {
-  const ExerciseRecord({Key? key}) : super(key: key);
+  final Map<String, String>? initialData;
+  const ExerciseRecord({Key? key, this.initialData}) : super(key: key);
 
   @override
   _ExerciseRecordState createState() => _ExerciseRecordState();
 }
 
 class _ExerciseRecordState extends State<ExerciseRecord> {
-  TextEditingController exerciseController = TextEditingController();
+  late TextEditingController exerciseController;
+  // TextEditingController exerciseController = TextEditingController();
   TextEditingController weightController = TextEditingController();
   TextEditingController repsController = TextEditingController();
   TextEditingController setsController = TextEditingController();
   TextEditingController notesController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    exerciseController =
+        TextEditingController(text: widget.initialData?['exercise'] ?? '');
+    weightController =
+        TextEditingController(text: widget.initialData?['weight'] ?? '');
+    repsController =
+        TextEditingController(text: widget.initialData?['reps'] ?? '');
+    setsController =
+        TextEditingController(text: widget.initialData?['sets'] ?? '');
+    notesController =
+        TextEditingController(text: widget.initialData?['notes'] ?? '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -296,75 +356,3 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
     );
   }
 }
-
-
-
-                    // children: exerciseDataList.map((exerciseData) {
-                    //   return SizedBox(
-                    //       width: width + 10,
-                    //       child: Card(
-                    //           color: Colors.blue,
-                    //           margin:
-                    //               const EdgeInsets.only(top: 10, bottom: 10),
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(12.0),
-                    //             child: Row(
-                    //               mainAxisAlignment:
-                    //                   MainAxisAlignment.spaceBetween,
-                    //               children: [
-                    //                 //! 좌측 부분
-                    //                 Column(
-                    //                   crossAxisAlignment:
-                    //                       CrossAxisAlignment.start,
-                    //                   children: [
-                    //                     Text(
-                    //                       '${exerciseData['exercise']}',
-                    //                       style: const TextStyle(
-                    //                         fontWeight: FontWeight.bold,
-                    //                         color: Colors.white,
-                    //                         fontSize: 20,
-                    //                       ),
-                    //                     ),
-                    //                     Row(
-                    //                       children: [
-                    //                         const Icon(
-                    //                           Icons.library_books,
-                    //                           color: Colors.white,
-                    //                           size: 20,
-                    //                         ),
-                    //                         const SizedBox(width: 5),
-                    //                         Text(
-                    //                           '${exerciseData['notes']}',
-                    //                           style: const TextStyle(
-                    //                               color: Colors.white),
-                    //                         ),
-                    //                       ],
-                    //                     )
-                    //                   ],
-                    //                 ),
-                    //                 //! 우측 부분
-                    //                 Column(
-                    //                   crossAxisAlignment:
-                    //                       CrossAxisAlignment.end,
-                    //                   children: [
-                    //                     Text(
-                    //                       '${exerciseData['weight']}kg',
-                    //                       style: const TextStyle(
-                    //                           color: Colors.white),
-                    //                     ),
-                    //                     Text(
-                    //                       '${exerciseData['sets']}세트',
-                    //                       style: const TextStyle(
-                    //                           color: Colors.white),
-                    //                     ),
-                    //                     Text(
-                    //                       '${exerciseData['reps']}회',
-                    //                       style: const TextStyle(
-                    //                           color: Colors.white),
-                    //                     ),
-                    //                   ],
-                    //                 )
-                    //               ],
-                    //             ),
-                    //           )));
-                    // }).toList(),
