@@ -102,11 +102,21 @@ class _ExerciseState extends State<ExerciseList> {
                                             fontSize: 20,
                                           ),
                                         ),
-                                        Text(
-                                          '특이사항: ${exerciseData['notes']}',
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.library_books,
+                                              color: Colors.white,
+                                              size: 20,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              '${exerciseData['notes']}',
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     ),
                                     //! 우측 부분
@@ -115,17 +125,17 @@ class _ExerciseState extends State<ExerciseList> {
                                           CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                          '중량: ${exerciseData['weight']}kg',
+                                          '${exerciseData['weight']}kg',
                                           style: const TextStyle(
                                               color: Colors.white),
                                         ),
                                         Text(
-                                          '세트: ${exerciseData['sets']}세트',
+                                          '${exerciseData['sets']}세트',
                                           style: const TextStyle(
                                               color: Colors.white),
                                         ),
                                         Text(
-                                          '횟수: ${exerciseData['reps']}회',
+                                          '${exerciseData['reps']}회',
                                           style: const TextStyle(
                                               color: Colors.white),
                                         ),
