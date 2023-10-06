@@ -12,6 +12,8 @@ Future<Database> initializeDB() async {
       await db.execute(
         "CREATE TABLE Exercise(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, notes TEXT, weight INTEGER, sets INTEGER, reps INTEGER, date TEXT)",
       );
+      await db.execute(
+          "CREATE TABLE IF NOT EXISTS CompletedExerciseDates(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, exercise_ids TEXT)");
     },
   );
 }
@@ -55,19 +57,19 @@ Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
   try {
     final db = await initializeDB(); // 데이터베이스 초기화
 
-    print('WhereArgs: ${[
-      exerciseData['name'],
-      exerciseData['weight'],
-      exerciseData['reps'],
-      exerciseData['sets'],
-      exerciseData['notes'],
-      exerciseData['date'],
-    ]}');
+    // print('WhereArgs: ${[
+    //   exerciseData['name'],
+    //   exerciseData['weight'],
+    //   exerciseData['reps'],
+    //   exerciseData['sets'],
+    //   exerciseData['notes'],
+    //   exerciseData['date'],
+    // ]}');
 
-    if (exerciseData.values.any((value) => value == null)) {
-      print('One or more fields are null');
-      return;
-    }
+    // if (exerciseData.values.any((value) => value == null)) {
+    //   print('One or more fields are null');
+    //   return;
+    // }
 
     await db.delete(
       'Exercise',
@@ -83,7 +85,7 @@ Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
       ],
     );
   } catch (e) {
-    print("데이터 삭제 중 오류가 발생했습니다 :  $e");
+    // print("데이터 삭제 중 오류가 발생했습니다 :  $e");
   }
 }
 
@@ -92,10 +94,10 @@ Future<void> updateExercise(
   try {
     final db = await initializeDB();
 
-    print('원본 데이터 이름');
-    print(originalData['name']);
-    print('업데이트할 이름');
-    print(updatedData['name']);
+    // print('원본 데이터 이름');
+    // print(originalData['name']);
+    // print('업데이트할 이름');
+    // print(updatedData['name']);
 
     // Update the record
     int updateCount = await db.update(
@@ -112,16 +114,16 @@ Future<void> updateExercise(
         originalData['date'],
       ],
     );
-    print("Updated Count: $updateCount");
+    // print("Updated Count: $updateCount");
 
     // 업데이트된 행의 수 확인
     if (updateCount == 1) {
-      print("Update successful");
+      // print("Update successful");
     } else {
-      print('Update failed:$updateCount');
+      // print('Update failed:$updateCount');
     }
   } catch (e) {
-    print("업데이트 중 오류가 발생했습니다: $e");
+    // print("업데이트 중 오류가 발생했습니다: $e");
   }
 }
 
