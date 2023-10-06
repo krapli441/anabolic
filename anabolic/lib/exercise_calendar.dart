@@ -19,6 +19,14 @@ class _CalendarState extends State<ExerciseCalendar> {
   // 운동 기록을 저장할 상태 변수
   List<Map<String, dynamic>> completedExercises = [];
 
+  void updateCalendar() {
+    fetchCompletedExercises().then((records) {
+      setState(() {
+        completedExercises = records;
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +37,12 @@ class _CalendarState extends State<ExerciseCalendar> {
         completedExercises = records;
       });
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    updateCalendar();
   }
 
   @override
@@ -173,30 +187,33 @@ class _CalendarState extends State<ExerciseCalendar> {
                     fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 30),
-              ExerciseStartButton(selectedDate: _selectedDate)
+              ExerciseSearchButton(selectedDate: _selectedDate)
             ],
           ),
         ));
   }
 }
 
-class ExerciseStartButton extends StatelessWidget {
+class ExerciseSearchButton extends StatelessWidget {
   final DateTime selectedDate; // 여기에 selectedDate 변수 추가
 
-  const ExerciseStartButton({Key? key, required this.selectedDate})
+  const ExerciseSearchButton({Key? key, required this.selectedDate})
       : super(key: key); // constructor에서 selectedDate를 받는다.
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
               context,
-              // ExercizeList 클래스에 selectedDate를 전달함.
+              // ExerciseDetailView 클래스에 selectedDate를 전달함.
               MaterialPageRoute(
                   builder: (context) => ExerciseDetailView(
                         selectedDate: selectedDate,
                       )));
+          if (result == 'update') {
+            // StatefulWidget의 상태를 업데이트하는 방법을 찾아야 합니다.
+          }
         },
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(200, 50)),
