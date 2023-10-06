@@ -2,6 +2,7 @@
 import 'package:anabolic/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'database.dart';
 
 class ExerciseCalendar extends StatefulWidget {
   const ExerciseCalendar({Key? key}) : super(key: key);
@@ -13,6 +14,21 @@ class ExerciseCalendar extends StatefulWidget {
 class _CalendarState extends State<ExerciseCalendar> {
   DateTime _selectedDate = DateTime.now(); // 사용자가 달력에서 선택한 날짜를 나타냄
   DateTime _focusedDay = DateTime.now();
+
+  // 운동 기록을 저장할 상태 변수
+  List<Map<String, dynamic>> completedExercises = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // 비동기 메서드를 호출하여 운동 기록을 불러옴
+    fetchCompletedExercises().then((records) {
+      setState(() {
+        // 상태 변수에 불러온 운동 기록을 저장
+        completedExercises = records;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +58,6 @@ class _CalendarState extends State<ExerciseCalendar> {
                 focusedDay: _focusedDay,
                 locale: 'ko_KR',
                 selectedDayPredicate: (date) => isSameDay(date, _selectedDate),
-                // 달력의 날짜를 클릭하면 onDaySelected 콜백이 호출되어
-                // _selectedDate와 _focusedDay를 업데이트한다.
-                // _selectedDate 값을 다른 페이지로 이동시켜야 함.
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     _selectedDate = selectedDay;
@@ -159,11 +172,7 @@ class ExerciseStartButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.play_arrow),
-            SizedBox(
-              width: 10,
-            ),
-            Text('시작하기'),
+            Text('확인'),
           ],
         ));
   }
