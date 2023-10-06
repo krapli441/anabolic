@@ -66,7 +66,9 @@ class MyApp extends StatelessWidget {
               const SizedBox(height: 30),
               const ExerciseRecordButton(),
               const SizedBox(height: 20),
-              const RecordDiaryButton(),
+              const ExerciseCalenderButton(),
+              const SizedBox(height: 20),
+              const DatabaseResetButton(),
             ],
           ),
         ),
@@ -107,8 +109,37 @@ class ExerciseRecordButton extends StatelessWidget {
   }
 }
 
-class RecordDiaryButton extends StatelessWidget {
-  const RecordDiaryButton({Key? key}) : super(key: key);
+class ExerciseCalenderButton extends StatelessWidget {
+  const ExerciseCalenderButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ExerciseDaySelector()));
+        },
+        style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(const Size(200, 50)),
+            backgroundColor: MaterialStateProperty.all(Colors.blue)),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.menu_book),
+            SizedBox(
+              width: 10,
+            ),
+            Text('일지 확인'),
+          ],
+        ));
+  }
+}
+
+class DatabaseResetButton extends StatelessWidget {
+  const DatabaseResetButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +157,7 @@ class RecordDiaryButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.menu_book),
+            Icon(Icons.delete),
             SizedBox(
               width: 10,
             ),
