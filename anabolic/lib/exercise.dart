@@ -33,6 +33,7 @@ class _ExerciseState extends State<ExerciseList> {
             'reps': queryRow['reps'].toString(),
             'sets': queryRow['sets'].toString(),
             'notes': queryRow['notes'].toString(),
+            'date': queryRow['date'].toString(),
           };
         }).toList();
       });
@@ -138,8 +139,7 @@ class _ExerciseState extends State<ExerciseList> {
                                     ),
                                     TextButton(
                                       onPressed: () async {
-                                        print(
-                                            "Deleting exercise with data: $exerciseData");
+                                        print("지우려는 데이터들: $exerciseData");
                                         await deleteExercise(
                                             exerciseData); // 데이터베이스에서 해당 운동을 삭제
                                         setState(
@@ -156,8 +156,10 @@ class _ExerciseState extends State<ExerciseList> {
                                                     exercise['sets'] ==
                                                         exerciseData['sets'] &&
                                                     exercise['notes'] ==
+                                                        exerciseData['notes'] &&
+                                                    exercise['date'] ==
                                                         exerciseData[
-                                                            'notes']); // UI에서 해당 운동을 삭제
+                                                            'date']); // UI에서 해당 운동을 삭제
                                           },
                                         );
                                         // ignore: use_build_context_synchronously

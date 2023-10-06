@@ -55,8 +55,14 @@ Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
   try {
     final db = await initializeDB(); // 데이터베이스 초기화
 
-    print(
-        "In deleteExercise, whereArgs: [${exerciseData['exercise']},${exerciseData['weight']},${exerciseData['reps']},${exerciseData['sets']},${exerciseData['notes']}]");
+    print('WhereArgs: ${[
+      exerciseData['exercise'],
+      exerciseData['weight'],
+      exerciseData['reps'],
+      exerciseData['sets'],
+      exerciseData['notes'],
+      exerciseData['date'],
+    ]}');
 
     if (exerciseData.values.any((value) => value == null)) {
       print('One or more fields are null');
@@ -65,16 +71,18 @@ Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
 
     await db.delete(
       'Exercise',
-      where: 'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ?',
+      where:
+          'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
       whereArgs: [
         exerciseData['exercise'],
         exerciseData['weight'],
         exerciseData['reps'],
         exerciseData['sets'],
         exerciseData['notes'],
+        exerciseData['date'],
       ],
     );
   } catch (e) {
-    print("Error while deleting: $e");
+    print("데이터 삭제 중 오류가 발생했습니다 :  $e");
   }
 }
