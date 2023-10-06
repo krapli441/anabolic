@@ -189,7 +189,17 @@ Future<List<Map<String, dynamic>>> fetchExercisesByIds(List<int> ids) async {
 
   // IN 연산자를 사용하여 여러 ID에 일치하는 레코드를 조회
   final List<Map<String, dynamic>> maps =
-      await db.rawQuery('SELECT * FROM Exercises WHERE id IN ($idList)');
+      await db.rawQuery('SELECT * FROM Exercise WHERE id IN ($idList)');
 
+  return maps;
+}
+
+Future<List<Map<String, dynamic>>> fetchExercisesByDate(DateTime date) async {
+  final db = await initializeDB();
+  final List<Map<String, dynamic>> maps = await db.query(
+    'Exercise',
+    where: 'date = ?',
+    whereArgs: [date.toIso8601String()],
+  );
   return maps;
 }

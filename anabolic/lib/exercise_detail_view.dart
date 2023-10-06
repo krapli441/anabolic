@@ -22,11 +22,6 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
         exerciseData = data;
       });
 
-      print(
-          "Type of exerciseData[0]['exercise_ids']: ${exerciseData[0]['exercise_ids'].runtimeType}");
-      print(
-          "Value of exerciseData[0]['exercise_ids']: ${exerciseData[0]['exercise_ids']}");
-
       // exercise_ids를 ','로 분리하여 정수 배열로 변환
       List<int> exerciseIds = exerciseData[0]["exercise_ids"]
           .split(',')
@@ -60,9 +55,17 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(actualExerciseData[index]["name"]),
-                    subtitle:
-                        Text("Weight: ${actualExerciseData[index]["weight"]}"),
-                    // 여기에 더 많은 정보를 추가할 수 있습니다.
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "Weight: ${actualExerciseData[index]["weight"]}kg"),
+                        Text("Reps: ${actualExerciseData[index]["reps"]}"),
+                        Text("Sets: ${actualExerciseData[index]["sets"]}"),
+                        Text("Sets: ${actualExerciseData[index]["notes"]}"),
+                        // 여기에 더 많은 정보를 추가할 수 있습니다.
+                      ],
+                    ),
                   );
                 },
               ));
