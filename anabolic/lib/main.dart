@@ -14,55 +14,67 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool showSnackBar;
+
+  const MyApp({this.showSnackBar = false, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (showSnackBar) {
+      Future.delayed(
+        Duration.zero,
+        () => ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('운동을 성공적으로 저장했습니다.')),
+        ),
+      );
+    }
+
     return MaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('ko', 'KR') // 한국어 설정
-        ],
-        home: Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 150,
-                  height: 150,
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                      child: Icon(
-                    Icons.fitness_center_sharp,
-                    color: Colors.white,
-                    size: 100,
-                  )),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR') // 한국어 설정
+      ],
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 150,
+                height: 150,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
                 ),
-                const SizedBox(height: 15),
-                Text('ANABOLIC',
-                    style: GoogleFonts.stalinistOne(
-                      fontSize: 32,
-                      color: Colors.blue,
-                    )),
-                const SizedBox(height: 30),
-                const ExerciseRecordButton(),
-                const SizedBox(height: 20),
-                const RecordDiaryButton(),
-              ],
-            ),
+                child: const Center(
+                    child: Icon(
+                  Icons.fitness_center_sharp,
+                  color: Colors.white,
+                  size: 100,
+                )),
+              ),
+              const SizedBox(height: 15),
+              Text('ANABOLIC',
+                  style: GoogleFonts.stalinistOne(
+                    fontSize: 32,
+                    color: Colors.blue,
+                  )),
+              const SizedBox(height: 30),
+              const ExerciseRecordButton(),
+              const SizedBox(height: 20),
+              const RecordDiaryButton(),
+            ],
           ),
         ),
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-        ));
+      ),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+      ),
+    );
   }
 }
 

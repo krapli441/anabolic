@@ -1,3 +1,4 @@
+import 'package:anabolic/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/services.dart';
@@ -308,13 +309,23 @@ class _ExerciseState extends State<ExerciseList> {
                             'exercise_ids': exerciseIdsStr
                           },
                         );
+                        await fetchCompletedExercises();
                         List<Map<String, dynamic>> savedData =
                             await fetchCompletedExercises();
                         print("저장된 운동 종료 기록: ");
                         print(savedData); // db 인스턴스 추가
+                        // ignore: use_build_context_synchronously
+                        // Navigator.pop(context); // 다이얼로그 닫기
 
                         // ignore: use_build_context_synchronously
-                        Navigator.pop(context); // 다이얼로그 닫기
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyApp(
+                              showSnackBar: true,
+                            ),
+                          ),
+                        );
                       },
                       child: const Text('네'),
                     ),
