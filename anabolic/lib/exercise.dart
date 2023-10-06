@@ -122,7 +122,7 @@ class _ExerciseState extends State<ExerciseList> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ExerciseRecord(
+                                                UpdateExerciseRecord(
                                               selectedDate: widget
                                                   .selectedDate, // 날짜를 전달합니다.
                                             ),
@@ -139,7 +139,6 @@ class _ExerciseState extends State<ExerciseList> {
                                     ),
                                     TextButton(
                                       onPressed: () async {
-                                        print("지우려는 데이터들: $exerciseData");
                                         await deleteExercise(
                                             exerciseData); // 데이터베이스에서 해당 운동을 삭제
                                         setState(
@@ -341,6 +340,157 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
               const SizedBox(height: 50),
               const Text(
                 '운동을 기록해주세요.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.blue),
+              ),
+              const SizedBox(height: 50),
+              TextField(
+                controller: exerciseController,
+                decoration: const InputDecoration(
+                    labelText: '운동',
+                    border: OutlineInputBorder(), // 테두리 스타일
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 10.0) // 텍스트 필드 안쪽 패딩
+                    ),
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                controller: weightController,
+                decoration: const InputDecoration(
+                    labelText: '중량',
+                    suffixText: 'kg',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                controller: repsController,
+                decoration: const InputDecoration(
+                    labelText: '횟수',
+                    suffixText: '회',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                controller: setsController,
+                decoration: const InputDecoration(
+                    labelText: '세트',
+                    suffixText: '세트',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                controller: notesController,
+                decoration: const InputDecoration(
+                    labelText: '특이사항',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0)),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(0), // 그림자 제거
+                  minimumSize: MaterialStateProperty.all(Size(width, 70)),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                onPressed: () async {
+                  String formattedDate =
+                      "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
+                  var exerciseData = {
+                    "exercise": exerciseController.text,
+                    "weight": weightController.text,
+                    "reps": repsController.text,
+                    "sets": setsController.text,
+                    "notes": notesController.text,
+                    "date": formattedDate
+                  };
+                  // 데이터베이스에 운동 기록 추가
+                  await insertExercise(exerciseData);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context, exerciseData);
+                },
+                child: const Text('추가하기'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class UpdateExerciseRecord extends StatefulWidget {
+  final Map<String, String>? initialData;
+  final DateTime selectedDate;
+  const UpdateExerciseRecord(
+      {Key? key, this.initialData, required this.selectedDate})
+      : super(key: key);
+
+  @override
+  _ExerciseUpdateState createState() => _ExerciseUpdateState();
+}
+
+class _ExerciseUpdateState extends State<UpdateExerciseRecord> {
+  late TextEditingController exerciseController;
+  TextEditingController weightController = TextEditingController();
+  TextEditingController repsController = TextEditingController();
+  TextEditingController setsController = TextEditingController();
+  TextEditingController notesController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    exerciseController =
+        TextEditingController(text: widget.initialData?['exercise'] ?? '');
+    weightController =
+        TextEditingController(text: widget.initialData?['weight'] ?? '');
+    repsController =
+        TextEditingController(text: widget.initialData?['reps'] ?? '');
+    setsController =
+        TextEditingController(text: widget.initialData?['sets'] ?? '');
+    notesController =
+        TextEditingController(text: widget.initialData?['notes'] ?? '');
+    dateController =
+        TextEditingController(text: widget.initialData?['date'] ?? '');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width * 1;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('기록 수정'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+            mainAxisSize: MainAxisSize.max, // 가능한 최대로 확장
+            children: [
+              const SizedBox(height: 50),
+              const Text(
+                '기록을 수정하세요.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20, color: Colors.blue),
               ),
