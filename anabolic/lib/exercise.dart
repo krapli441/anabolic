@@ -132,10 +132,15 @@ class _ExerciseState extends State<ExerciseList> {
                                         // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
 
+                                        // 기존 데이터를 찾아서 업데이트 (또는 제거)
+                                        int index = exerciseDataList.indexWhere(
+                                            (element) =>
+                                                element == exerciseData);
+                                        if (index != -1) {
+                                          exerciseDataList[index] = result;
+                                        }
+
                                         if (result != null) {
-                                          exerciseDataList.add(result);
-                                          insertExercise(
-                                              result); // 데이터베이스에 데이터를 저장합니다.
                                           setState(() {});
                                         }
                                       },

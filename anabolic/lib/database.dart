@@ -34,11 +34,11 @@ Future<void> insertExercise(Map<String, String> exerciseData) async {
   await db.insert("Exercise", dataToInsert);
 
   // 삽입 성공 여부 확인
-  if (dataToInsert != 0) {
-    print("운동 기록이 데이터베이스에 성공적으로 삽입되었습니다. ID: $dataToInsert");
-  } else {
-    print("운동 기록 삽입에 실패했습니다.");
-  }
+  // if (dataToInsert != 0) {
+  //   print("운동 기록이 데이터베이스에 성공적으로 삽입되었습니다. ID: $dataToInsert");
+  // } else {
+  //   print("운동 기록 삽입에 실패했습니다.");
+  // }
 }
 
 Future<List<Map<String, dynamic>>> fetchExerciseByDate(String date) async {
@@ -104,7 +104,7 @@ Future<void> updateExercise(
       where:
           'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
       whereArgs: [
-        originalData['exercise'],
+        originalData['name'],
         originalData['weight'],
         originalData['reps'],
         originalData['sets'],
