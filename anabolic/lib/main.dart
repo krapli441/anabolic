@@ -101,11 +101,10 @@ class RecordDiaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const ExerciseDaySelector()));
+        onPressed: () async {
+          // 데이터베이스에 운동 기록 추가
+          await clearExerciseTable();
+          // ignore: use_build_context_synchronously
         },
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(200, 50)),
@@ -119,7 +118,7 @@ class RecordDiaryButton extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text('일지 확인'),
+            Text('데이터베이스 지우기'),
           ],
         ));
   }

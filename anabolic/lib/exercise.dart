@@ -28,7 +28,7 @@ class _ExerciseState extends State<ExerciseList> {
       setState(() {
         exerciseDataList = fetchedData.map((queryRow) {
           return {
-            'exercise': queryRow['name'].toString(),
+            'name': queryRow['name'].toString(),
             'weight': queryRow['weight'].toString(),
             'reps': queryRow['reps'].toString(),
             'sets': queryRow['sets'].toString(),
@@ -192,7 +192,7 @@ class _ExerciseState extends State<ExerciseList> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '${exerciseData['exercise']}',
+                                            '${exerciseData['name']}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
@@ -419,7 +419,7 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
                   String formattedDate =
                       "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
                   var exerciseData = {
-                    "exercise": exerciseController.text,
+                    "name": exerciseController.text,
                     "weight": weightController.text,
                     "reps": repsController.text,
                     "sets": setsController.text,
@@ -464,7 +464,7 @@ class _ExerciseUpdateState extends State<UpdateExerciseRecord> {
   void initState() {
     super.initState();
     exerciseController =
-        TextEditingController(text: widget.initialData?['exercise'] ?? '');
+        TextEditingController(text: widget.initialData?['name'] ?? '');
     weightController =
         TextEditingController(text: widget.initialData?['weight'] ?? '');
     repsController =
@@ -570,7 +570,7 @@ class _ExerciseUpdateState extends State<UpdateExerciseRecord> {
                   String formattedDate =
                       "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
                   var updateData = {
-                    "exercise": exerciseController.text,
+                    "name": exerciseController.text,
                     "weight": weightController.text,
                     "reps": repsController.text,
                     "sets": setsController.text,

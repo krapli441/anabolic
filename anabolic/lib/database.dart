@@ -22,7 +22,7 @@ Future<void> insertExercise(Map<String, String> exerciseData) async {
 
   // 삽입할 데이터 준비
   Map<String, dynamic> dataToInsert = {
-    "name": exerciseData["exercise"],
+    "name": exerciseData["name"],
     "weight": int.parse(exerciseData["weight"] ?? "0"),
     "reps": int.parse(exerciseData["reps"] ?? "0"),
     "sets": int.parse(exerciseData["sets"] ?? "0"),
@@ -56,7 +56,7 @@ Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
     final db = await initializeDB(); // 데이터베이스 초기화
 
     print('WhereArgs: ${[
-      exerciseData['exercise'],
+      exerciseData['name'],
       exerciseData['weight'],
       exerciseData['reps'],
       exerciseData['sets'],
@@ -74,7 +74,7 @@ Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
       where:
           'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
       whereArgs: [
-        exerciseData['exercise'],
+        exerciseData['name'],
         exerciseData['weight'],
         exerciseData['reps'],
         exerciseData['sets'],
@@ -92,11 +92,17 @@ Future<void> updateExercise(
   try {
     final db = await initializeDB();
 
-    await db.update(
+    print('원본 데이터 이름');
+    print(originalData['name']);
+    print('업데이트할 이름');
+    print(updatedData['name']);
+
+    // Update the record
+    int updateCount = await db.update(
       'Exercise',
       updatedData,
       where:
-          'exercise = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
+          'name = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
       whereArgs: [
         originalData['exercise'],
         originalData['weight'],
@@ -106,7 +112,20 @@ Future<void> updateExercise(
         originalData['date'],
       ],
     );
+    print("Updated Count: $updateCount");
+
+    // 업데이트된 행의 수 확인
+    if (updateCount == 1) {
+      print("Update successful");
+    } else {
+      print('Update failed:$updateCount');
+    }
   } catch (e) {
     print("업데이트 중 오류가 발생했습니다: $e");
   }
+}
+
+Future<void> clearExerciseTable() async {
+  final db = await initializeDB();
+  await db.execute("DELETE FROM Exercise");
 }
