@@ -3,6 +3,7 @@ import 'package:anabolic/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'database.dart';
+import 'package:collection/collection.dart';
 
 class ExerciseCalendar extends StatefulWidget {
   const ExerciseCalendar({Key? key}) : super(key: key);
@@ -55,6 +56,16 @@ class _CalendarState extends State<ExerciseCalendar> {
               TableCalendar(
                 firstDay: DateTime.utc(2020, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
+                eventLoader: (day) {
+                  // 해당 날짜에 대한 운동 기록을 찾아봄
+                  var exerciseRecord = completedExercises.firstWhereOrNull(
+                    (record) => isSameDay(DateTime.parse(record['date']), day),
+                  );
+                  if (exerciseRecord != null) {
+                    return [exerciseRecord]; // 이 배열의 길이가 마커의 개수를 결정.
+                  }
+                  return [];
+                },
                 focusedDay: _focusedDay,
                 locale: 'ko_KR',
                 selectedDayPredicate: (date) => isSameDay(date, _selectedDate),
@@ -69,66 +80,89 @@ class _CalendarState extends State<ExerciseCalendar> {
                   formatButtonVisible: false,
                 ),
                 daysOfWeekHeight: 20,
-                calendarBuilders: CalendarBuilders(dowBuilder: (context, day) {
-                  switch (day.weekday) {
-                    case 1:
-                      return const Center(
-                        child: Text('월'),
-                      );
-                    case 2:
-                      return const Center(
-                        child: Text('화'),
-                      );
-                    case 3:
-                      return const Center(
-                        child: Text('수'),
-                      );
-                    case 4:
-                      return const Center(
-                        child: Text('목'),
-                      );
-                    case 5:
-                      return const Center(
-                        child: Text('금'),
-                      );
-                    case 6:
-                      return const Center(
-                        child: Text(
-                          '토',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      );
-                    case 7:
-                      return const Center(
-                        child: Text(
-                          '일',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      );
-                    default:
-                      return const Center(child: Text('Error'));
-                  }
-                }, defaultBuilder: (context, date, _) {
-                  if (date.weekday == 7) {
-                    return Center(
-                        child: Text(
-                      date.day.toString(),
-                      style: const TextStyle(color: Colors.red),
-                    ));
-                  }
-                  return Center(child: Text(date.day.toString()));
-                }, selectedBuilder: (context, date, _) {
-                  return Container(
-                    margin: const EdgeInsets.all(4.0),
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                        color: Colors.blue, shape: BoxShape.circle),
-                    child: Text(
-                      date.day.toString(),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  );
-                }),
+                calendarBuilders: CalendarBuilders(
+                  dowBuilder: (context, day) {
+                    switch (day.weekday) {
+                      case 1:
+                        return const Center(
+                          child: Text('월'),
+                        );
+                      case 2:
+                        return const Center(
+                          child: Text('화'),
+                        );
+                      case 3:
+                        return const Center(
+                          child: Text('수'),
+                        );
+                      case 4:
+                        return const Center(
+                          child: Text('목'),
+                        );
+                      case 5:
+                        return const Center(
+                          child: Text('금'),
+                        );
+                      case 6:
+                        return const Center(
+                          child: Text(
+                            '토',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        );
+                      case 7:
+                        return const Center(
+                          child: Text(
+                            '일',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        );
+                      default:
+                        return const Center(child: Text('Error'));
+                    }
+                  },
+                  defaultBuilder: (context, date, _) {
+                    if (date.weekday == 7) {
+                      return Center(
+                          child: Text(
+                        date.day.toString(),
+                        style: const TextStyle(color: Colors.red),
+                      ));
+                    }
+                    return Center(child: Text(date.day.toString()));
+                  },
+                  selectedBuilder: (context, date, _) {
+                    return Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Text(
+                        date.day.toString(),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    );
+                  },
+                  markerBuilder: (context, date, events) {
+                    return Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: events.isNotEmpty ? Colors.blue : null),
+                      child: events.isNotEmpty
+                          ? const Icon(
+                              Icons.fitness_center, // 체크 아이콘
+                              color: Colors.white,
+                            )
+                          : Text(
+                              date.day.toString(),
+                              style: const TextStyle()
+                                  .copyWith(color: Colors.black),
+                            ),
+                    );
+                  },
+                ),
               ),
               const SizedBox(height: 30),
               Text(
