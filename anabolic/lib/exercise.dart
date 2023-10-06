@@ -179,7 +179,9 @@ class _ExerciseState extends State<ExerciseList> {
                                           },
                                         );
                                         // ignore: use_build_context_synchronously
-                                        Navigator.pop(context);
+                                        Navigator.pop(
+                                          context,
+                                        );
                                         // ignore: use_build_context_synchronously
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
