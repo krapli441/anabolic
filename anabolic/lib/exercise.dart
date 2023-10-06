@@ -301,10 +301,17 @@ class _ExerciseState extends State<ExerciseList> {
                         // 2. ID들을 쉼표로 구분된 문자열로 만든다.
                         String exerciseIdsStr = exerciseIds.join(',');
                         // 3. CompletedExerciseDates 테이블에 정보를 저장한다.
-                        await insertCompletedExerciseDate(db, {
-                          'date': formattedDate,
-                          'exercise_ids': exerciseIdsStr
-                        }); // db 인스턴스 추가
+                        await insertCompletedExerciseDate(
+                          db,
+                          {
+                            'date': formattedDate,
+                            'exercise_ids': exerciseIdsStr
+                          },
+                        );
+                        List<Map<String, dynamic>> savedData =
+                            await fetchCompletedExercises();
+                        print("저장된 운동 종료 기록: ");
+                        print(savedData); // db 인스턴스 추가
 
                         // ignore: use_build_context_synchronously
                         Navigator.pop(context); // 다이얼로그 닫기

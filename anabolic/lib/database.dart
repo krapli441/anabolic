@@ -7,7 +7,7 @@ Future<Database> initializeDB() async {
   String path = directory.path + '/exercise.db';
   return openDatabase(
     path,
-    version: 1,
+    version: 2,
     onCreate: (Database db, int version) async {
       await db.execute(
         "CREATE TABLE Exercise(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, notes TEXT, weight INTEGER, sets INTEGER, reps INTEGER, date TEXT)",
@@ -152,10 +152,17 @@ Future<List<Map<String, dynamic>>> getExerciseRecordsByDate(
 Future<int?> insertCompletedExerciseDate(
     Database db, Map<String, dynamic> data) async {
   try {
-    final int? result = await db.insert('CompletedExerciseDates', data);
+    final int result = await db.insert('CompletedExerciseDates', data);
     return result;
   } catch (e) {
     print("운동 종료 날짜를 데이터베이스에 추가하는 중 오류가 발생했습니다: $e");
     return null;
   }
+}
+
+Future<List<Map<String, dynamic>>> fetchCompletedExercises() async {
+  final db = await initializeDB();
+  final List<Map<String, dynamic>> maps =
+      await db.query('CompletedExerciseDates');
+  return maps;
 }
