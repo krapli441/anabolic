@@ -180,3 +180,16 @@ Future<List<Map<String, dynamic>>> fetchExerciseDataForDate(
   );
   return maps;
 }
+
+Future<List<Map<String, dynamic>>> fetchExercisesByIds(List<int> ids) async {
+  final db = await initializeDB();
+
+  // ID 목록을 쉼표로 구분된 문자열로 변환
+  String idList = ids.join(',');
+
+  // IN 연산자를 사용하여 여러 ID에 일치하는 레코드를 조회
+  final List<Map<String, dynamic>> maps =
+      await db.rawQuery('SELECT * FROM Exercises WHERE id IN ($idList)');
+
+  return maps;
+}

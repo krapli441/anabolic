@@ -3,7 +3,6 @@ import 'database.dart';
 
 class ExerciseDetailView extends StatefulWidget {
   final DateTime selectedDate;
-
   const ExerciseDetailView({Key? key, required this.selectedDate})
       : super(key: key);
 
@@ -13,6 +12,7 @@ class ExerciseDetailView extends StatefulWidget {
 
 class _ExerciseDetailViewState extends State<ExerciseDetailView> {
   List<Map<String, dynamic>> exerciseData = [];
+  List<Map<String, dynamic>> actualExerciseData = [];
 
   @override
   void initState() {
@@ -20,6 +20,26 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
     fetchExerciseDataForDate(widget.selectedDate).then((data) {
       setState(() {
         exerciseData = data;
+      });
+
+      print(
+          "Type of exerciseData[0]['exercise_ids']: ${exerciseData[0]['exercise_ids'].runtimeType}");
+      print(
+          "Value of exerciseData[0]['exercise_ids']: ${exerciseData[0]['exercise_ids']}");
+
+      // exercise_ids를 ','로 분리하여 정수 배열로 변환
+      List<int> exerciseIds = exerciseData[0]["exercise_ids"]
+          .split(',')
+          .map<int>((e) => int.parse(e))
+          .toList();
+
+      // 이 ID를 사용하여 실제 운동 정보를 불러옴
+      fetchExercisesByIds(exerciseIds).then((exerciseInfo) {
+        // 이제 exerciseInfo에는 실제 운동 정보가 있을 것입니다.
+        // 이 정보를 화면에 표시하도록 setState를 호출합니다.
+        setState(() {
+          actualExerciseData = exerciseInfo;
+        });
       });
     });
   }
@@ -36,12 +56,12 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
                 child: Text("기록된 운동이 없습니다."),
               )
             : ListView.builder(
-                itemCount: exerciseData.length,
+                itemCount: actualExerciseData.length,
                 itemBuilder: (context, index) {
-                  // 이 부분에서 각 운동의 정보를 표시하는 로직을 구현합니다.
-                  String? exerciseName = exerciseData[index]["exerciseName"];
                   return ListTile(
-                    title: Text(exerciseName ?? "Unknown"), // null 체크를 추가
+                    title: Text(actualExerciseData[index]["name"]),
+                    subtitle:
+                        Text("Weight: ${actualExerciseData[index]["weight"]}"),
                     // 여기에 더 많은 정보를 추가할 수 있습니다.
                   );
                 },
