@@ -142,6 +142,13 @@ class _ExerciseState extends State<ExerciseList> {
 
                                         if (result != null) {
                                           setState(() {});
+                                          // ignore: use_build_context_synchronously
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text('운동 기록이 변경되었습니다.'),
+                                            ),
+                                          );
                                         }
                                       },
                                       child: const Text('변경'),
@@ -172,6 +179,13 @@ class _ExerciseState extends State<ExerciseList> {
                                         );
                                         // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
+                                        // ignore: use_build_context_synchronously
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text('운동 기록이 삭제되었습니다.'),
+                                          ),
+                                        );
                                       },
                                       child: const Text("삭제"),
                                     ),
@@ -435,6 +449,12 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
                   await insertExercise(exerciseData);
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context, exerciseData);
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('운동 기록이 추가되었습니다.'),
+                    ),
+                  );
                 },
                 child: const Text('추가하기'),
               ),
