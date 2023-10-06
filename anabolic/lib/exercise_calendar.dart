@@ -1,9 +1,9 @@
 // diary.dart
-import 'package:anabolic/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'database.dart';
 import 'package:collection/collection.dart';
+import 'exercise_detail_view.dart';
 
 class ExerciseCalendar extends StatefulWidget {
   const ExerciseCalendar({Key? key}) : super(key: key);
@@ -194,7 +194,7 @@ class ExerciseStartButton extends StatelessWidget {
               context,
               // ExercizeList 클래스에 selectedDate를 전달함.
               MaterialPageRoute(
-                  builder: (context) => ExerciseList(
+                  builder: (context) => ExerciseDetailView(
                         selectedDate: selectedDate,
                       )));
         },

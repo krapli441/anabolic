@@ -167,3 +167,16 @@ Future<List<Map<String, dynamic>>> fetchCompletedExercises() async {
       await db.query('CompletedExerciseDates');
   return maps;
 }
+
+Future<List<Map<String, dynamic>>> fetchExerciseDataForDate(
+    DateTime date) async {
+  final db = await initializeDB();
+  final List<Map<String, dynamic>> maps = await db.query(
+    'CompletedExerciseDates',
+    where: 'date = ?',
+    whereArgs: [
+      date.toIso8601String().split('T').first
+    ], // 'YYYY-MM-DD' 형태로 날짜를 문자열로 변환
+  );
+  return maps;
+}
