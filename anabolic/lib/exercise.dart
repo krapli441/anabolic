@@ -283,7 +283,7 @@ class _ExerciseState extends State<ExerciseList> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text('운동 종료'),
-                  content: const Text('운동을 종료하고 기록하시겠어요?'),
+                  content: const Text('운동을 종료하시겠어요?'),
                   actions: [
                     TextButton(
                       onPressed: () {
