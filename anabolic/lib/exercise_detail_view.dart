@@ -58,11 +58,10 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            "Weight: ${actualExerciseData[index]["weight"]}kg"),
-                        Text("Reps: ${actualExerciseData[index]["reps"]}"),
-                        Text("Sets: ${actualExerciseData[index]["sets"]}"),
-                        Text("Sets: ${actualExerciseData[index]["notes"]}"),
+                        Text("${actualExerciseData[index]["weight"]}kg"),
+                        Text("${actualExerciseData[index]["sets"]}세트"),
+                        Text("${actualExerciseData[index]["reps"]}회"),
+                        Text("${actualExerciseData[index]["notes"]}"),
                         // 여기에 더 많은 정보를 추가할 수 있습니다.
                       ],
                     ),
