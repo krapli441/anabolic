@@ -149,7 +149,7 @@ class _CalendarState extends State<ExerciseCalendar> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: events.isNotEmpty ? Colors.blue : null),
+                          color: events.isNotEmpty ? Colors.blue[500] : null),
                       child: events.isNotEmpty
                           ? const Icon(
                               Icons.fitness_center, // 체크 아이콘
