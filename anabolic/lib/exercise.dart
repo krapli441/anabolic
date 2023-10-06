@@ -129,6 +129,9 @@ class _ExerciseState extends State<ExerciseList> {
                                             ),
                                           ),
                                         );
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+
                                         if (result != null) {
                                           exerciseDataList.add(result);
                                           insertExercise(
@@ -566,7 +569,7 @@ class _ExerciseUpdateState extends State<UpdateExerciseRecord> {
                 onPressed: () async {
                   String formattedDate =
                       "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
-                  var exerciseData = {
+                  var updateData = {
                     "exercise": exerciseController.text,
                     "weight": weightController.text,
                     "reps": repsController.text,
@@ -574,12 +577,16 @@ class _ExerciseUpdateState extends State<UpdateExerciseRecord> {
                     "notes": notesController.text,
                     "date": formattedDate
                   };
+
+                  var originalData =
+                      widget.initialData; // 원래 데이터는 위젯의 초기 데이터로부터 가져옵니다.
+
                   // 데이터베이스에 운동 기록 추가
-                  await insertExercise(exerciseData);
+                  await updateExercise(updateData, originalData!);
                   // ignore: use_build_context_synchronously
-                  Navigator.pop(context, exerciseData);
+                  Navigator.pop(context, updateData);
                 },
-                child: const Text('추가하기'),
+                child: const Text('변경하기'),
               ),
             ],
           ),

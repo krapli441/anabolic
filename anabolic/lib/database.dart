@@ -86,3 +86,27 @@ Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
     print("데이터 삭제 중 오류가 발생했습니다 :  $e");
   }
 }
+
+Future<void> updateExercise(
+    Map<String, dynamic> updatedData, Map<String, dynamic> originalData) async {
+  try {
+    final db = await initializeDB();
+
+    await db.update(
+      'Exercise',
+      updatedData,
+      where:
+          'exercise = ? AND weight = ? AND reps = ? AND sets = ? AND notes = ? AND date = ?',
+      whereArgs: [
+        originalData['exercise'],
+        originalData['weight'],
+        originalData['reps'],
+        originalData['sets'],
+        originalData['notes'],
+        originalData['date'],
+      ],
+    );
+  } catch (e) {
+    print("업데이트 중 오류가 발생했습니다: $e");
+  }
+}
