@@ -310,10 +310,10 @@ class _ExerciseState extends State<ExerciseList> {
                           },
                         );
                         await fetchCompletedExercises();
-                        List<Map<String, dynamic>> savedData =
-                            await fetchCompletedExercises();
-                        print("저장된 운동 종료 기록: ");
-                        print(savedData); // db 인스턴스 추가
+                        // List<Map<String, dynamic>> savedData =
+                        // await fetchCompletedExercises();
+                        // print("저장된 운동 종료 기록: ");
+                        // print(savedData); // db 인스턴스 추가
                         // ignore: use_build_context_synchronously
                         // Navigator.pop(context); // 다이얼로그 닫기
 

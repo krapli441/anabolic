@@ -53,19 +53,75 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
             : ListView.builder(
                 itemCount: actualExerciseData.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(actualExerciseData[index]["name"]),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${actualExerciseData[index]["weight"]}kg"),
-                        Text("${actualExerciseData[index]["sets"]}세트"),
-                        Text("${actualExerciseData[index]["reps"]}회"),
-                        Text("${actualExerciseData[index]["notes"]}"),
-                        // 여기에 더 많은 정보를 추가할 수 있습니다.
-                      ],
-                    ),
-                  );
+                  var exerciseData = actualExerciseData[index];
+                  double screenWidth = MediaQuery.of(context).size.width;
+                  return Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: screenWidth * 0.9,
+                        child: Card(
+                          color: Colors.blue,
+                          margin: const EdgeInsets.only(top: 10, bottom: 10),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //! 좌측 부분
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${exerciseData['name']}',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.library_books,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          '${exerciseData['notes']}',
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                //! 우측 부분
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      '${exerciseData['weight']}kg',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                    Text(
+                                      '${exerciseData['sets']}세트',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                    Text(
+                                      '${exerciseData['reps']}회',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ));
                 },
               ));
   }
