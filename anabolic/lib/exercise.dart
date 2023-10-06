@@ -286,9 +286,28 @@ class _ExerciseState extends State<ExerciseList> {
                   content: const Text('운동을 종료하시겠어요?'),
                   actions: [
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        // 0. 데이터베이스 인스턴스를 가져온다.
+                        final db = await initializeDB();
+                        // 1. 해당 날짜의 모든 운동 기록 ID를 가져온다.
+                        String formattedDate =
+                            "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
+                        List<Map> exerciseRecords =
+                            await getExerciseRecordsByDate(
+                                db, formattedDate); // db 인스턴스 추가
+                        List<String> exerciseIds = exerciseRecords
+                            .map((record) => record['id'].toString())
+                            .toList();
+                        // 2. ID들을 쉼표로 구분된 문자열로 만든다.
+                        String exerciseIdsStr = exerciseIds.join(',');
+                        // 3. CompletedExerciseDates 테이블에 정보를 저장한다.
+                        await insertCompletedExerciseDate(db, {
+                          'date': formattedDate,
+                          'exercise_ids': exerciseIdsStr
+                        }); // db 인스턴스 추가
+
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context); // 다이얼로그 닫기
-                        // 운동 기록 저장 로직을 여기에 추가할 수 있습니다.
                       },
                       child: const Text('네'),
                     ),

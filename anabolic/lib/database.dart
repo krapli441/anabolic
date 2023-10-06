@@ -131,3 +131,31 @@ Future<void> clearExerciseTable() async {
   final db = await initializeDB();
   await db.execute("DELETE FROM Exercise");
 }
+
+// 특정 날짜의 운동 기록을 가져오는 함수
+Future<List<Map<String, dynamic>>> getExerciseRecordsByDate(
+    Database db, String formattedDate) async {
+  try {
+    final List<Map<String, dynamic>> result = await db.query(
+      'Exercise',
+      where: 'date = ?',
+      whereArgs: [formattedDate],
+    );
+    return result;
+  } catch (e) {
+    print("날짜별 운동 기록을 가져오는 중 오류가 발생했습니다: $e");
+    return [];
+  }
+}
+
+// 운동 종료 기록을 데이터베이스에 추가하는 함수
+Future<int?> insertCompletedExerciseDate(
+    Database db, Map<String, dynamic> data) async {
+  try {
+    final int? result = await db.insert('CompletedExerciseDates', data);
+    return result;
+  } catch (e) {
+    print("운동 종료 날짜를 데이터베이스에 추가하는 중 오류가 발생했습니다: $e");
+    return null;
+  }
+}
