@@ -123,8 +123,9 @@ class _ExerciseState extends State<ExerciseList> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 UpdateExerciseRecord(
-                                              selectedDate: widget
-                                                  .selectedDate, // 날짜를 전달합니다.
+                                              selectedDate:
+                                                  widget.selectedDate, // 날짜 전달.
+                                              initialData: exerciseData,
                                             ),
                                           ),
                                         );
@@ -438,7 +439,7 @@ class _ExerciseRecordState extends State<ExerciseRecord> {
 }
 
 class UpdateExerciseRecord extends StatefulWidget {
-  final Map<String, String>? initialData;
+  final Map<String, dynamic>? initialData;
   final DateTime selectedDate;
   const UpdateExerciseRecord(
       {Key? key, this.initialData, required this.selectedDate})
