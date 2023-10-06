@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 // components
 import 'exercise_day_select.dart';
 import 'database.dart';
+import 'exercise_calendar.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
@@ -119,7 +120,7 @@ class ExerciseCalenderButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const ExerciseDaySelector()));
+                  builder: (context) => const ExerciseCalendar()));
         },
         style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(const Size(200, 50)),

@@ -130,6 +130,7 @@ Future<void> updateExercise(
 Future<void> clearExerciseTable() async {
   final db = await initializeDB();
   await db.execute("DELETE FROM Exercise");
+  await db.execute("DELETE FROM CompletedExerciseDates");
 }
 
 // 특정 날짜의 운동 기록을 가져오는 함수
