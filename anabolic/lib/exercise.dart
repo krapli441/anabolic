@@ -112,8 +112,8 @@ class _ExerciseState extends State<ExerciseList> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: const Text('기록 수정'),
-                                  content: const Text('기록을 변경하거나 삭제할 수 있습니다.'),
+                                  title: const Text('기록 변경'),
+                                  content: const Text('기록을 변경하거나 삭제하시겠어요?'),
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
@@ -298,7 +298,6 @@ class ExerciseRecord extends StatefulWidget {
 
 class _ExerciseRecordState extends State<ExerciseRecord> {
   late TextEditingController exerciseController;
-  // TextEditingController exerciseController = TextEditingController();
   TextEditingController weightController = TextEditingController();
   TextEditingController repsController = TextEditingController();
   TextEditingController setsController = TextEditingController();
