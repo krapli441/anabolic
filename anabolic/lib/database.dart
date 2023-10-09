@@ -34,13 +34,6 @@ Future<void> insertExercise(Map<String, String> exerciseData) async {
 
   // 데이터 삽입
   await db.insert("Exercise", dataToInsert);
-
-  // 삽입 성공 여부 확인
-  // if (dataToInsert != 0) {
-  //   print("운동 기록이 데이터베이스에 성공적으로 삽입되었습니다. ID: $dataToInsert");
-  // } else {
-  //   print("운동 기록 삽입에 실패했습니다.");
-  // }
 }
 
 Future<List<Map<String, dynamic>>> fetchExerciseByDate(String date) async {
@@ -56,20 +49,6 @@ Future<List<Map<String, dynamic>>> fetchExerciseByDate(String date) async {
 Future<void> deleteExercise(Map<String, dynamic> exerciseData) async {
   try {
     final db = await initializeDB(); // 데이터베이스 초기화
-
-    // print('WhereArgs: ${[
-    //   exerciseData['name'],
-    //   exerciseData['weight'],
-    //   exerciseData['reps'],
-    //   exerciseData['sets'],
-    //   exerciseData['notes'],
-    //   exerciseData['date'],
-    // ]}');
-
-    // if (exerciseData.values.any((value) => value == null)) {
-    //   print('One or more fields are null');
-    //   return;
-    // }
 
     await db.delete(
       'Exercise',
@@ -93,11 +72,6 @@ Future<void> updateExercise(
     Map<String, dynamic> updatedData, Map<String, dynamic> originalData) async {
   try {
     final db = await initializeDB();
-
-    // print('원본 데이터 이름');
-    // print(originalData['name']);
-    // print('업데이트할 이름');
-    // print(updatedData['name']);
 
     // Update the record
     int updateCount = await db.update(
@@ -202,4 +176,18 @@ Future<List<Map<String, dynamic>>> fetchExercisesByDate(DateTime date) async {
     whereArgs: [date.toIso8601String()],
   );
   return maps;
+}
+
+// 특정 날짜의 '운동 종료' 기록을 삭제하는 함수
+Future<void> deleteCompletedExerciseDate(
+    Database db, String formattedDate) async {
+  try {
+    await db.delete(
+      'CompletedExerciseDates', // 운동 종료 기록을 저장하는 테이블 이름
+      where: 'date = ?',
+      whereArgs: [formattedDate],
+    );
+  } catch (e) {
+    print("운동 종료 기록을 삭제하는 중 오류가 발생했습니다: $e");
+  }
 }

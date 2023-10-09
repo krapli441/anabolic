@@ -19,30 +19,26 @@ class _CalendarState extends State<ExerciseCalendar> {
   // 운동 기록을 저장할 상태 변수
   List<Map<String, dynamic>> completedExercises = [];
 
-  void updateCalendar() {
-    fetchCompletedExercises().then((records) {
-      setState(() {
-        completedExercises = records;
-      });
+  void refreshData() async {
+    List<Map<String, dynamic>> newExercises = await fetchCompletedExercises();
+    setState(() {
+      completedExercises = newExercises;
     });
+    print(newExercises);
   }
 
   @override
   void initState() {
     super.initState();
-    // 비동기 메서드를 호출하여 운동 기록을 불러옴
-    fetchCompletedExercises().then((records) {
-      setState(() {
-        // 상태 변수에 불러온 운동 기록을 저장
-        completedExercises = records;
-      });
-    });
+    refreshData(); // 페이지가 로드될 때 데이터를 불러옴
+    print('페이지 로드 감지됨');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    updateCalendar();
+    refreshData(); // 의존성이 변경될 때마다 데이터를 불러옴
+    print('의존성 변경 감지됨');
   }
 
   @override
@@ -195,8 +191,7 @@ class _CalendarState extends State<ExerciseCalendar> {
 }
 
 class ExerciseSearchButton extends StatelessWidget {
-  final DateTime selectedDate; // 여기에 selectedDate 변수 추가
-
+  final DateTime selectedDate;
   const ExerciseSearchButton({Key? key, required this.selectedDate})
       : super(key: key); // constructor에서 selectedDate를 받는다.
 
