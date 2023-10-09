@@ -288,64 +288,68 @@ class _ExerciseState extends State<ExerciseList> {
           style: ButtonStyle(
             elevation: MaterialStateProperty.all(0), // 그림자 제거
             minimumSize: MaterialStateProperty.all(Size(width, 50)),
-            backgroundColor: MaterialStateProperty.all(Colors.blue),
+            backgroundColor: MaterialStateProperty.all(
+              exerciseDataList.isEmpty ? Colors.grey : Colors.blue,
+            ),
           ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('운동 종료'),
-                  content: const Text('운동을 종료하시겠어요?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () async {
-                        // 0. 데이터베이스 인스턴스를 가져온다.
-                        final db = await initializeDB();
-                        // 1. 해당 날짜의 모든 운동 기록 ID를 가져온다.
-                        String formattedDate =
-                            "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
-                        List<Map> exerciseRecords =
-                            await getExerciseRecordsByDate(
-                                db, formattedDate); // db 인스턴스 추가
-                        List<String> exerciseIds = exerciseRecords
-                            .map((record) => record['id'].toString())
-                            .toList();
-                        // 2. ID들을 쉼표로 구분된 문자열로 만든다.
-                        String exerciseIdsStr = exerciseIds.join(',');
-                        // 3. CompletedExerciseDates 테이블에 정보를 저장한다.
-                        await insertCompletedExerciseDate(
-                          db,
-                          {
-                            'date': formattedDate,
-                            'exercise_ids': exerciseIdsStr
-                          },
-                        );
-                        await fetchCompletedExercises();
+          onPressed: exerciseDataList.isEmpty
+              ? null
+              : () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('운동 종료'),
+                        content: const Text('운동을 종료하시겠어요?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              // 0. 데이터베이스 인스턴스를 가져온다.
+                              final db = await initializeDB();
+                              // 1. 해당 날짜의 모든 운동 기록 ID를 가져온다.
+                              String formattedDate =
+                                  "${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}";
+                              List<Map> exerciseRecords =
+                                  await getExerciseRecordsByDate(
+                                      db, formattedDate); // db 인스턴스 추가
+                              List<String> exerciseIds = exerciseRecords
+                                  .map((record) => record['id'].toString())
+                                  .toList();
+                              // 2. ID들을 쉼표로 구분된 문자열로 만든다.
+                              String exerciseIdsStr = exerciseIds.join(',');
+                              // 3. CompletedExerciseDates 테이블에 정보를 저장한다.
+                              await insertCompletedExerciseDate(
+                                db,
+                                {
+                                  'date': formattedDate,
+                                  'exercise_ids': exerciseIdsStr
+                                },
+                              );
+                              await fetchCompletedExercises();
 
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MyApp(
-                              showSnackBar: true,
-                            ),
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MyApp(
+                                    showSnackBar: true,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: const Text('네'),
                           ),
-                        );
-                      },
-                      child: const Text('네'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context); // 다이얼로그 닫기
-                      },
-                      child: const Text('아니요'),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context); // 다이얼로그 닫기
+                            },
+                            child: const Text('아니요'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
           child: const Text('운동 종료'),
         ),
       ),
