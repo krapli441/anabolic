@@ -118,7 +118,7 @@ Future<List<Map<String, dynamic>>> getExerciseRecordsByDate(
     );
     return result;
   } catch (e) {
-    print("날짜별 운동 기록을 가져오는 중 오류가 발생했습니다: $e");
+    // print("날짜별 운동 기록을 가져오는 중 오류가 발생했습니다: $e");
     return [];
   }
 }
@@ -130,7 +130,7 @@ Future<int?> insertCompletedExerciseDate(
     final int result = await db.insert('CompletedExerciseDates', data);
     return result;
   } catch (e) {
-    print("운동 종료 날짜를 데이터베이스에 추가하는 중 오류가 발생했습니다: $e");
+    // print("운동 종료 날짜를 데이터베이스에 추가하는 중 오류가 발생했습니다: $e");
     return null;
   }
 }
@@ -188,6 +188,6 @@ Future<void> deleteCompletedExerciseDate(
       whereArgs: [formattedDate],
     );
   } catch (e) {
-    print("운동 종료 기록을 삭제하는 중 오류가 발생했습니다: $e");
+    // print("운동 종료 기록을 삭제하는 중 오류가 발생했습니다: $e");
   }
 }

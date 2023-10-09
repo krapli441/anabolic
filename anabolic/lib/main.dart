@@ -68,8 +68,8 @@ class MyApp extends StatelessWidget {
               const ExerciseRecordButton(),
               const SizedBox(height: 20),
               const ExerciseCalenderButton(),
-              const SizedBox(height: 20),
-              const DatabaseResetButton(),
+              // const SizedBox(height: 20),
+              // const DatabaseResetButton(),
             ],
           ),
         ),
@@ -139,31 +139,31 @@ class ExerciseCalenderButton extends StatelessWidget {
   }
 }
 
-class DatabaseResetButton extends StatelessWidget {
-  const DatabaseResetButton({Key? key}) : super(key: key);
+// class DatabaseResetButton extends StatelessWidget {
+//   const DatabaseResetButton({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () async {
-          // 데이터베이스에 운동 기록 추가
-          await clearExerciseTable();
-          // ignore: use_build_context_synchronously
-        },
-        style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size(200, 50)),
-          backgroundColor: MaterialStateProperty.all(Colors.blue),
-        ),
-        child: const Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.delete),
-            SizedBox(
-              width: 10,
-            ),
-            Text('데이터베이스 지우기'),
-          ],
-        ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ElevatedButton(
+//         onPressed: () async {
+//           // 데이터베이스에 운동 기록 추가
+//           await clearExerciseTable();
+//           // ignore: use_build_context_synchronously
+//         },
+//         style: ButtonStyle(
+//           minimumSize: MaterialStateProperty.all(const Size(200, 50)),
+//           backgroundColor: MaterialStateProperty.all(Colors.blue),
+//         ),
+//         child: const Row(
+//           mainAxisSize: MainAxisSize.min,
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Icon(Icons.delete),
+//             SizedBox(
+//               width: 10,
+//             ),
+//             Text('데이터베이스 지우기'),
+//           ],
+//         ));
+//   }
+// }

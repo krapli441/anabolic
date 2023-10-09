@@ -24,21 +24,21 @@ class _CalendarState extends State<ExerciseCalendar> {
     setState(() {
       completedExercises = newExercises;
     });
-    print(newExercises);
+    // print(newExercises);
   }
 
   @override
   void initState() {
     super.initState();
     refreshData(); // 페이지가 로드될 때 데이터를 불러옴
-    print('페이지 로드 감지됨');
+    // print('페이지 로드 감지됨');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     refreshData(); // 의존성이 변경될 때마다 데이터를 불러옴
-    print('의존성 변경 감지됨');
+    // print('의존성 변경 감지됨');
   }
 
   @override
