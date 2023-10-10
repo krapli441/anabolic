@@ -331,9 +331,7 @@ class _ExerciseState extends State<ExerciseList> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MyApp(
-                                    showSnackBar: true,
-                                  ),
+                                  builder: (context) => const MyApp(),
                                 ),
                               );
                             },

@@ -1,7 +1,11 @@
 // main.dart
+
 // package
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 // components
@@ -15,21 +19,10 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final bool showSnackBar;
-
-  const MyApp({this.showSnackBar = false, Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (showSnackBar) {
-      Future.delayed(
-        Duration.zero,
-        () => ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('운동을 성공적으로 저장했습니다.')),
-        ),
-      );
-    }
-
     return MaterialApp(
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -138,32 +131,3 @@ class ExerciseCalenderButton extends StatelessWidget {
         ));
   }
 }
-
-// class DatabaseResetButton extends StatelessWidget {
-//   const DatabaseResetButton({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ElevatedButton(
-//         onPressed: () async {
-//           // 데이터베이스에 운동 기록 추가
-//           await clearExerciseTable();
-//           // ignore: use_build_context_synchronously
-//         },
-//         style: ButtonStyle(
-//           minimumSize: MaterialStateProperty.all(const Size(200, 50)),
-//           backgroundColor: MaterialStateProperty.all(Colors.blue),
-//         ),
-//         child: const Row(
-//           mainAxisSize: MainAxisSize.min,
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Icon(Icons.delete),
-//             SizedBox(
-//               width: 10,
-//             ),
-//             Text('데이터베이스 지우기'),
-//           ],
-//         ));
-//   }
-// }
